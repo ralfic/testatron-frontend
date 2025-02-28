@@ -1,14 +1,9 @@
 'use client';
-
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import { useState } from 'react';
+import { LoginForm } from './forms/login-form';
+import { RegisterForm } from './forms/register-form';
 
 interface Props {
   isOpen: boolean;
@@ -20,10 +15,19 @@ export function AuthModal({ isOpen, onClose }: Props) {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[500px] p-8">
-        <h2 className="text-3xl text-center  font-inter">
+      <VisuallyHidden>
+        <DialogTitle>Modal</DialogTitle>
+      </VisuallyHidden>
+      <DialogContent className="sm:max-w-[425px] p-8">
+        <h2 className="text-3xl text-center  font-inter mb-6">
           {type === 'login' ? 'Login' : 'Sign up'}
         </h2>
+
+        {type === 'login' ? (
+          <LoginForm changeForm={() => setType('signup')} />
+        ) : (
+          <RegisterForm changeForm={() => setType('login')} />
+        )}
       </DialogContent>
     </Dialog>
   );

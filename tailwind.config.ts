@@ -59,8 +59,8 @@ export default {
       fontFamily: {
         lato: ['Lato', 'sans-serif'],
         poppins: ['Poppins', 'sans-serif'],
-        roboto: ['Roboto', 'sans-serif'],
         oxanium: ['Oxanium', 'cursive'],
+        roboto: ['Roboto', 'sans-serif'],
         inter: ['Inter', 'sans-serif'],
         openSans: ['Open Sans', 'sans-serif'],
       },
