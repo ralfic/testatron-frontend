@@ -6,14 +6,14 @@ import { InputForm } from '@/components/shared/form/input-form';
 import { Button } from '@/components/ui/button';
 import { KeyRound, Mail, User } from 'lucide-react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useRegister } from '@/hooks/auth-hooks/use-register';
+import { useAuth } from '@/hooks/use-auth';
 
 interface Props {
   changeForm: () => void;
 }
 
 export function RegisterForm({ changeForm }: Props) {
-  const { mutate: register } = useRegister();
+  const { registerUser } = useAuth();
 
   const form = useForm<RegisterData>({
     resolver: zodResolver(registerSchema),
@@ -26,34 +26,36 @@ export function RegisterForm({ changeForm }: Props) {
   });
 
   const onSubmit = (data: RegisterData) => {
-    register(data);
+    registerUser(data);
   };
 
   return (
     <FormProvider {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="flex flex-col gap-8">
-          <InputForm
-            name="fullName"
-            label="Full name"
-            required
-            placeholder="Full name"
-            Icon={User}
-          />
-          <InputForm
-            name="email"
-            label="Email"
-            required
-            placeholder="Email"
-            Icon={Mail}
-          />
-          <InputForm
-            name="password"
-            label="Password"
-            required
-            placeholder="Password"
-            Icon={KeyRound}
-          />
+        <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-6">
+            <InputForm
+              name="fullName"
+              label="Full name"
+              required
+              placeholder="Full name"
+              Icon={User}
+            />
+            <InputForm
+              name="email"
+              label="Email"
+              required
+              placeholder="Email"
+              Icon={Mail}
+            />
+            <InputForm
+              name="password"
+              label="Password"
+              required
+              placeholder="Password"
+              Icon={KeyRound}
+            />
+          </div>
 
           <div className="flex gap-1 font-roboto">
             <p>Already have an account?</p>
@@ -62,7 +64,7 @@ export function RegisterForm({ changeForm }: Props) {
             </p>
           </div>
 
-          <Button className="mt-6" type="submit">
+          <Button className="mt-4" type="submit">
             Sign up
           </Button>
         </div>
