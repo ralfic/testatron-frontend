@@ -12,3 +12,4 @@ export const navPath = [
     path: '/about',
   },
 ];
+
