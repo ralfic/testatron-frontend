@@ -15,7 +15,7 @@ export const useAuth = () => {
     mutationFn: (data: LoginData) => login(data),
     onSuccess: (data) => {
       toast.success(`Welcome ${data.data.fullName}`);
-      replace('/dashboard');
+      replace('/i/dashboard');
     },
     onError: () => {
       toast.error('Invalid credentials');
@@ -27,7 +27,7 @@ export const useAuth = () => {
     mutationFn: async (data: RegisterData) => await register(data),
     onSuccess: (data) => {
       toast.success(`Welcome ${data.data.fullName}`);
-      replace('/dashboard');
+      replace('/i/dashboard');
     },
     onError: () => {
       toast.error('Invalid credentials');

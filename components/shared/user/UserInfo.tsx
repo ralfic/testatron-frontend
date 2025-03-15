@@ -1,8 +1,8 @@
 'use client';
 import { AvatarFallback } from '@/components/ui/avatar';
-import { useProfile } from '@/hooks/use-profile';
+import { useProfile } from '@/hooks/useProfile';
 import { Avatar } from '@radix-ui/react-avatar';
-import UserInfoSkeleton from './user-info-skeleton';
+import UserInfoSkeleton from './UserInfoSkeleton';
 
 export default function UserInfo() {
   const { profile, isLoading } = useProfile();

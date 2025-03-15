@@ -1,17 +1,17 @@
 'use client';
 
 import { useState } from 'react';
-import { AuthModal } from './auth/auth-modal';
-import Container from './container';
-import Logo from './logo';
-import NavigationMenu from './navigation-menu';
-import { ButtonAuth } from './button-auth';
+import { AuthModal } from './auth/AuthModal';
+import NavigationMenu from './NavigationMenu';
+import { ButtonAuth } from './ButtonAuth';
+import { Logo } from './Logo';
+import Container from './Container';
 
 export default function Header() {
   const [isOpen, onClose] = useState(false);
 
   return (
-    <header className="pt-8 mb-28">
+    <header className="pt-8 mb-10">
       <Container className="grid grid-cols-3 items-center ">
         <Logo />
         <NavigationMenu />

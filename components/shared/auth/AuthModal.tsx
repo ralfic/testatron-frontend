@@ -2,8 +2,8 @@
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import { useState } from 'react';
-import { LoginForm } from './forms/login-form';
-import { RegisterForm } from './forms/register-form';
+import { LoginForm } from './forms/LoginForm';
+import { RegisterForm } from './forms/RegisterForm';
 
 interface Props {
   isOpen: boolean;

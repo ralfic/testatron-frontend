@@ -1,4 +1,10 @@
-import { AlarmClock, AlarmClockOff, House, LayoutDashboard, LogOut, Settings } from 'lucide-react';
+import {
+  AlarmClock,
+  AlarmClockOff,
+  LayoutDashboard,
+  LogOut,
+  Settings,
+} from 'lucide-react';
 
 export const dashboardMenuPaths = [
   {
@@ -9,15 +15,12 @@ export const dashboardMenuPaths = [
       { name: 'Ended test', path: '/i/ended-test', icon: AlarmClockOff },
     ],
   },
-  {
-    title: 'Room',
-    paths: [{ name: 'Join test', path: '/i/join-test', icon: House }],
-  },
+
   {
     title: 'Others',
     paths: [
-      { name: 'Settings', path: '/i/settings' , icon: Settings},
-      { name: 'Logout', path: '/i/logout' , icon: LogOut },
+      { name: 'Settings', path: '/i/settings', icon: Settings },
+      { name: 'Logout', path: '/i/logout', icon: LogOut },
     ],
   },
 ];

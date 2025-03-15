@@ -2,11 +2,11 @@
 
 import { useForm, FormProvider } from 'react-hook-form';
 import { RegisterData, registerSchema } from './schemas';
-import { InputForm } from '@/components/shared/form/input-form';
+import { InputForm } from '@/components/shared/form/InputForm';
 import { Button } from '@/components/ui/button';
 import { KeyRound, Mail, User } from 'lucide-react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useAuth } from '@/hooks/use-auth';
+import { useAuth } from '@/hooks/useAuth';
 
 interface Props {
   changeForm: () => void;

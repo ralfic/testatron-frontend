@@ -2,8 +2,8 @@
 
 import { Input } from '@/components/ui/input';
 import { useFormContext } from 'react-hook-form';
-import { ErrorMessage } from '../error-message';
-import { RequiredSymbol } from '../required-symbol';
+import { ErrorMessage } from '../ErrorMessage';
+import { RequiredSymbol } from '../RequiredSymbol';
 import { LucideIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 

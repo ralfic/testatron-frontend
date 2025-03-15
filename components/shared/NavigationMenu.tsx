@@ -1,4 +1,4 @@
-import { navPath } from '@/constants/nav-path';
+import { navPath } from '@/constants/navPaths';
 import Link from 'next/link';
 
 export default function NavigationMenu() {

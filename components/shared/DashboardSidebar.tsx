@@ -14,7 +14,7 @@ import {
 } from '@/components/ui/sidebar';
 import { dashboardMenuPaths } from '@/constants';
 import Link from 'next/link';
-import UserInfo from './user/user-info';
+import UserInfo from './user/UserInfo';
 import { usePathname } from 'next/navigation';
 
 export function DashboardSidebar() {
