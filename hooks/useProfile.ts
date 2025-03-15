@@ -7,6 +7,7 @@ export const useProfile = () => {
     queryFn: async () => await getProfile(),
     select: (data) => data.data,
     retry: false,
+    
   });
 
   return { profile: data, isLoading };

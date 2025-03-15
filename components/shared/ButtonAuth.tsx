@@ -1,6 +1,6 @@
 'use client';
 
-import { useProfile } from '@/hooks/use-profile';
+import { useProfile } from '@/hooks/useProfile';
 import { Button } from '../ui/button';
 import { useRouter } from 'next/navigation';
 
