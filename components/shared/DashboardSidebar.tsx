@@ -25,7 +25,7 @@ export function DashboardSidebar() {
       <div className="p-4">
         <SidebarHeader className="mb-2">
           <Link href="/" className="mb-5">
-            <h1 className="font-bold text-3xl text-white">Tetatron</h1>
+            <h1 className="font-bold text-3xl">Tetatron</h1>
           </Link>
           <UserInfo />
         </SidebarHeader>
@@ -43,10 +43,9 @@ export function DashboardSidebar() {
                         <SidebarMenuButton
                           size="lg"
                           asChild
-                          className=" text-black"
                           isActive={pathName === path}
                         >
-                          <a href={path}>
+                          <a className='text' href={path}>
                             <Icon className="w-5 h-5" />
                             {name}
                           </a>

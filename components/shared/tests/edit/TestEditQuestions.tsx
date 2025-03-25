@@ -1,15 +1,17 @@
 'use client';
 
 import { useTestStore } from '@/store/useTestStore';
-import { useEditTest } from '@/hooks/useEditTest';
 import { Button } from '@/components/ui/button';
 import { QuestionEditCard } from './QuestionEditCard';
 import { SectionEditCard } from './SectionEditCard';
 import { useState } from 'react';
 import { TestCardSkeleton } from '../TestCardSkeleton';
 
-export function TestEditQuestions({ testId }: { testId: number }) {
-  const { isTestLoading } = useEditTest(testId);
+export function TestEditQuestions({
+  isTestLoading,
+}: {
+  isTestLoading: boolean;
+}) {
   const { test, addQuestion } = useTestStore();
   const [focusElementId, setFocusElementId] = useState<string | number>('');
 

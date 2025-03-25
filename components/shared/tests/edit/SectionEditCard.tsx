@@ -1,4 +1,4 @@
-import { TextEditor } from '@/components/editor/TextEditor';
+import { TextEditor } from '@/components/shared/editor/TextEditor';
 import { cn } from '@/lib/utils';
 import { useTestStore } from '@/store/useTestStore';
 
@@ -21,21 +21,21 @@ export function SectionEditCard({
     <div
       className={cn(
         'flex gap-2 bg-white rounded-xl  py-4 px-5 flex-col',
-        focusElementId === 'header' && 'border-l-4 border-l-cyan-400'
+        focusElementId === 'header' && 'border-l-4 border-l-secondary'
       )}
       onClick={setFocus}
     >
-      <>
-        <TextEditor
-          className="text-2xl font-semibold"
-          text={title}
-          setText={(text) => updateTestStore({ title: text })}
-        />
-        <TextEditor
-          text={description || ''}
-          setText={(text) => updateTestStore({ description: text })}
-        />
-      </>
+      <TextEditor
+        className="text-2xl font-semibold"
+        text={title}
+        setText={(text) => updateTestStore({ title: text })}
+      />
+      <TextEditor
+        text={description || ''}
+        setText={(text) => updateTestStore({ description: text })}
+        className="text-sm  "
+        withLists
+      />
     </div>
   );
 }

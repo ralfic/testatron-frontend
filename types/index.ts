@@ -2,12 +2,11 @@ export interface IUser {
   email: string;
   fullName: string;
   id: string;
-  createdAt: string;
-  updatedAt: string;
 }
 
 export interface ITest {
   id: number;
+  code: string;
   title: string;
   description: string | null;
   isGraduate: boolean;
@@ -31,29 +30,17 @@ export interface IOption {
   isCorrect: boolean;
 }
 
-export interface ITestUpdate {
-  id: number;
-  title: string;
-  description: string | null;
-  isGraduate: boolean;
+export interface ITestUpdate extends Omit<ITest, 'questions'> {
   questions?: IQuestionUpdate[];
 }
-
-interface IQuestionUpdate {
+export interface IQuestionUpdate extends Omit<IQuestion, 'options' | 'id'> {
   id: number | undefined;
-  testId: number;
-  type: QuestionType;
-  description: string | null;
-  isRequired: boolean;
-  text: string;
   options?: IOptionUpdate[];
 }
 
-interface IOptionUpdate {
-  questionId: number | undefined;
+export interface IOptionUpdate extends Omit<IOption, 'id' | 'questionId'> {
   id: number | undefined;
-  text: string;
-  isCorrect: boolean;
+  questionId: number | undefined;
 }
 
 export enum QuestionType {

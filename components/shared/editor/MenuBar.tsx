@@ -1,20 +1,36 @@
 import { Editor } from '@tiptap/react';
-import { Button } from '../ui/button';
-import { Bold, Italic, Redo, Underline, Undo } from 'lucide-react';
-import { RxTextNone } from 'react-icons/rx';
+import { Button } from '@/components/ui/button';
+import { Bold, Italic, ListOrdered, Redo, Underline, Undo } from 'lucide-react';
+import { RxListBullet, RxTextNone } from 'react-icons/rx';
 import { cn } from '@/lib/utils';
 import { forwardRef } from 'react';
 
 interface Props {
   editor: Editor | null;
   hidden: boolean;
+  withLists?: boolean;
 }
 
 export const MenuBar = forwardRef<HTMLDivElement, Props>(
-  ({ editor, hidden }, ref) => {
+  ({ editor, hidden, withLists }, ref) => {
     if (!editor) {
       return null;
     }
+
+    const listButtons = [
+      {
+        icon: <RxListBullet />,
+        onClick: () => editor.chain().focus().toggleBulletList().run(),
+        disabled: !editor.can().chain().focus().toggleBulletList().run(),
+        pressed: editor.isActive('bulletList'),
+      },
+      {
+        icon: <ListOrdered />,
+        onClick: () => editor.chain().focus().toggleOrderedList().run(),
+        disabled: !editor.can().chain().focus().toggleOrderedList().run(),
+        pressed: editor.isActive('orderedList'),
+      },
+    ];
 
     const MenuBarButtons = [
       {
@@ -56,6 +72,10 @@ export const MenuBar = forwardRef<HTMLDivElement, Props>(
       },
     ];
 
+    if (withLists) {
+      MenuBarButtons.splice(MenuBarButtons.length - 1, 0, ...listButtons);
+    }
+
     return (
       <div
         ref={ref}
@@ -63,7 +83,7 @@ export const MenuBar = forwardRef<HTMLDivElement, Props>(
       >
         {MenuBarButtons.map(({ icon, onClick, disabled, pressed }, i) => (
           <Button
-            className={pressed ? 'bg-cream' : ''}
+            className={pressed ? 'bg-secondary' : ''}
             key={i}
             variant="ghost"
             size="icon"

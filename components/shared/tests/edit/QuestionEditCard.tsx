@@ -1,4 +1,3 @@
-import { TextEditor } from '@/components/editor/TextEditor';
 import { RadioGroup } from '@/components/ui/radio-group';
 import { useTestStore } from '@/store/useTestStore';
 import {
@@ -13,7 +12,7 @@ import { OptionEditCard } from './OptionEditCard';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { QuestionEditCardBottom } from './QuestionEditCardBottom';
-import { Input } from '@/components/ui/input';
+import { TextEditor } from '@/components/shared/editor/TextEditor';
 
 interface Props {
   question: IQuestion;
@@ -28,14 +27,12 @@ export function QuestionEditCard({
 }: Props) {
   const { updateQuestion, addOption } = useTestStore();
 
-  console.log(question);
-
   return (
     <div
       key={question.id}
       className={cn(
         'flex gap-2 bg-white rounded-xl py-4 px-5 flex-col',
-        focusQuestionId === question.id && 'border-l-4 border-l-cyan-400'
+        focusQuestionId === question.id && 'border-l-4 border-l-secondary'
       )}
       onClick={setFocus}
     >
@@ -51,6 +48,7 @@ export function QuestionEditCard({
               <TextEditor
                 text={question.description}
                 className="text-sm text-gray-600 mt-2"
+                withLists={true}
                 setText={(text) =>
                   updateQuestion(question.id, { description: text })
                 }

@@ -5,7 +5,7 @@ import { AuthModal } from './auth/AuthModal';
 import NavigationMenu from './NavigationMenu';
 import { ButtonAuth } from './ButtonAuth';
 import { Logo } from './Logo';
-import Container from './Container';
+import { Container } from './Container';
 
 export default function Header() {
   const [isOpen, onClose] = useState(false);

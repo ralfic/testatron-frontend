@@ -14,6 +14,7 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   className?: string;
   placeholder?: string;
   Icon?: LucideIcon;
+  disabled?: boolean;
 }
 
 export function InputForm({
@@ -23,6 +24,7 @@ export function InputForm({
   label,
   required,
   className,
+  disabled = false,
   ...props
 }: Props) {
   const {
@@ -35,7 +37,7 @@ export function InputForm({
   return (
     <div className={className}>
       {label && (
-        <p className="mb-2 font-roboto">
+        <p className="mb-1 font-roboto">
           {label} {required && <RequiredSymbol />}
         </p>
       )}
@@ -43,11 +45,12 @@ export function InputForm({
       <div className="relative">
         {Icon && (
           <div className="absolute top-3 left-3 translate-y-0.5">
-            <Icon className='w-5 h-5'/>
+            <Icon className="w-5 h-5" />
           </div>
         )}
         <Input
-          className={cn('h-12 text-md placeholder:font-inter', {
+          disabled={disabled}
+          className={cn('h-12 text-md ', {
             'pl-10': Icon,
           })}
           {...register(name)}

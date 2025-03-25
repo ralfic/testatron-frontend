@@ -2,25 +2,16 @@
 
 import { SearchInput } from '@/components/shared/SearchInput';
 import { TestsList } from '@/components/shared/tests/TestList';
-import { createTest, getMyTests } from '@/services/test.service';
-import { useTestStore } from '@/store/useTestStore';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
+import { Button } from '@/components/ui/button';
+import { useCreateTest } from '@/hooks/useCreateTest';
+import { TestService } from '@/services/test.service';
+import { useQuery } from '@tanstack/react-query';
 
 export default function Dashboard() {
-  const { data: tests, isLoading } = useQuery({
-    queryKey: ['tests'],
-    queryFn: () => getMyTests(),
-    select: (data) => data.data,
-  });
-
-  const { setTest, test } = useTestStore();
-  const createTestMutation = useMutation({
-    mutationKey: ['createTest'],
-    mutationFn: () => createTest(),
-    onSuccess: (data) => setTest(data.data),
-  });
-  const { push } = useRouter();
+  const { data: tests, isLoading } = useQuery(
+    TestService.getMyTestsQueryOptions()
+  );
+  const createTestMutation = useCreateTest();
 
   return (
     <div className="tracking-wider px-10 flex gap-4">
@@ -34,11 +25,14 @@ export default function Dashboard() {
             isLoading={isLoading}
             tests={tests}
             title="Latest tests"
-            actionText="Edit new test"
-            action={() => {
-              createTestMutation.mutate();
-              push(`/test/${test?.id}/edit`);
-            }}
+            button={
+              <Button
+                onClick={() => createTestMutation.mutate()}
+                disabled={createTestMutation.isPending}
+              >
+                Create test
+              </Button>
+            }
           />
         )}
       </div>

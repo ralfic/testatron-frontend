@@ -2,7 +2,7 @@ import Header from '@/components/shared/Header';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Testatron | Home',
+  title: 'Home',
 };
 
 export default function HomeLayout({

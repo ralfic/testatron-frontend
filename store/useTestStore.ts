@@ -27,6 +27,7 @@ interface TestStore {
     questionId: number | string,
     optionId: number | string
   ) => void;
+  clearStore: () => void;
 }
 
 export const useTestStore = create<TestStore>((set) => ({
@@ -159,6 +160,7 @@ export const useTestStore = create<TestStore>((set) => ({
         : null,
     }));
   },
+  clearStore: () => set({ test: null }),
 }));
 
 export const prepareDataForBackend = (test: ITest): ITestUpdate => {
