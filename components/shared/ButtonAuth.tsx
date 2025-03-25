@@ -9,7 +9,7 @@ interface Props {
 }
 
 export function ButtonAuth({ onClose }: Props) {
-  const { profile, isLoading } = useProfile();
+  const { data: profile, isLoading } = useProfile();
   const router = useRouter();
 
   return (

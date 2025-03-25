@@ -1,9 +1,11 @@
 'use client';
-import Container from '@/components/shared/Container';
+import { Container } from '@/components/shared/Container';
 import { TestEditHeader } from './TestEditHeader';
 import { TestEditQuestions } from './TestEditQuestions';
 import { TestEditSettings } from './TestEditSettings';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useEditTest } from '@/hooks/useEditTest';
+import { useTestStore } from '@/store/useTestStore';
 
 interface Props {
   testId: number;
@@ -11,15 +13,20 @@ interface Props {
 
 export function TestEditLayout({ testId }: Props) {
   const [currentTab, setCurrentTab] = useState(1);
+  const { isLoading } = useEditTest(testId);
+  const clearStore = useTestStore((state) => state.clearStore);
+
+  useEffect(() => {
+    return () => {
+      clearStore();
+    };
+  }, []);
+
   return (
     <div>
-      <TestEditHeader
-        currentTab={currentTab}
-        setCurrentTab={setCurrentTab}
-        testId={Number(testId)}
-      />
+      <TestEditHeader currentTab={currentTab} setCurrentTab={setCurrentTab} />
       <Container>
-        {currentTab === 1 && <TestEditQuestions testId={Number(testId)} />}
+        {currentTab === 1 && <TestEditQuestions isTestLoading={isLoading} />}
         {currentTab === 2 && <TestEditSettings />}
       </Container>
     </div>

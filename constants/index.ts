@@ -2,7 +2,6 @@ import {
   AlarmClock,
   AlarmClockOff,
   LayoutDashboard,
-  LogOut,
   Settings,
 } from 'lucide-react';
 
@@ -18,9 +17,6 @@ export const dashboardMenuPaths = [
 
   {
     title: 'Others',
-    paths: [
-      { name: 'Settings', path: '/i/settings', icon: Settings },
-      { name: 'Logout', path: '/i/logout', icon: LogOut },
-    ],
+    paths: [{ name: 'Settings', path: '/i/settings', icon: Settings }],
   },
 ];

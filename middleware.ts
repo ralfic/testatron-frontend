@@ -4,7 +4,7 @@ import type { NextRequest } from 'next/server';
 const protectedRoutes = ['/i'];
 
 export function middleware(req: NextRequest) {
-  const session = req.cookies.get('connect.sid');
+  const session = req.cookies.get('connect.sid')?.value;
 
   const isProtected = protectedRoutes.includes(req.nextUrl.pathname);
 

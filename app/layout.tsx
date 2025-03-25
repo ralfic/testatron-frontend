@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Lato } from 'next/font/google';
 import './globals.css';
 import { Providers } from '@/components/shared/Providers';
+import { SITE_DESCRIPTION, SITE_NAME } from '@/constants/seo.constants';
 
 const lato = Lato({
   subsets: ['latin'],
@@ -10,7 +11,11 @@ const lato = Lato({
 });
 
 export const metadata: Metadata = {
-  title: 'Testatron',
+  title: {
+    absolute: SITE_NAME,
+    template: `%s | ${SITE_NAME}`,
+  },
+  description: SITE_DESCRIPTION,
 };
 
 export default function RootLayout({
@@ -19,7 +24,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={`${lato.variable} antialiased`}>
         <Providers>{children}</Providers>
       </body>

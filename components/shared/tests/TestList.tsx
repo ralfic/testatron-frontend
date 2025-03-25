@@ -1,31 +1,22 @@
 'use client';
 
 import { ITest } from '@/types';
-import { Button } from '../../ui/button';
 import { TestCard } from './TestCard';
+import { ReactElement } from 'react';
 
 interface Props {
   tests: Omit<ITest, 'questions'>[] | undefined;
   title: 'Latest tests' | 'Ended tests' | 'Ongoing tests';
-  actionText: 'Edit new test' | 'Delete all tests';
   isLoading: boolean;
-  action: () => void;
+  button: ReactElement;
 }
 
-export function TestsList({
-  tests,
-  title,
-  action,
-  actionText,
-  isLoading,
-}: Props) {
+export function TestsList({ tests, title, button, isLoading }: Props) {
   return (
     <div>
       <div className="flex justify-between mb-4">
         <h3 className="text-3xl">{title}</h3>
-        <Button className="bg-cream" onClick={() => action()}>
-          {actionText}
-        </Button>
+        {button}
       </div>
       {isLoading && <p>Loading...</p>}
       {!tests && <p>No tests</p>}
