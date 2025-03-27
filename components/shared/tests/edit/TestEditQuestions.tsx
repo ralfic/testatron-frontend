@@ -2,7 +2,7 @@
 
 import { useTestStore } from '@/store/useTestStore';
 import { Button } from '@/components/ui/button';
-import { QuestionEditCard } from './QuestionEditCard';
+import { QuestionEditCard } from './question/QuestionEditCard';
 import { SectionEditCard } from './SectionEditCard';
 import { useState } from 'react';
 import { TestCardSkeleton } from '../TestCardSkeleton';

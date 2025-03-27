@@ -16,7 +16,7 @@ export function AuthModal({ isOpen, onClose }: Props) {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <VisuallyHidden>
-        <DialogTitle>Modal</DialogTitle>
+        <DialogTitle>Modal auth</DialogTitle>
       </VisuallyHidden>
       <DialogContent className="sm:max-w-[425px] p-8">
         <h2 className="text-3xl text-center  font-inter mb-6">

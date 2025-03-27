@@ -1,4 +1,4 @@
-import { IQuestion, ITest, ITestUpdate, QuestionType } from '@/types';
+import { IOption, IQuestion, ITest, ITestUpdate, QuestionType } from '@/types';
 import { create } from 'zustand';
 
 let tempIdCounter = 0;
@@ -20,7 +20,7 @@ interface TestStore {
   updateOption: (
     questionId: number | string,
     optionId: number | string,
-    data: Partial<IQuestion>
+    data: Partial<IOption>
   ) => void;
   deleteQuestion: (questionId: number | string) => void;
   deleteOption: (
@@ -50,6 +50,7 @@ export const useTestStore = create<TestStore>((set) => ({
                 type: QuestionType.SINGLE,
                 description: null,
                 isRequired: false,
+                score: 3,
                 text: 'New question',
                 options: [
                   {

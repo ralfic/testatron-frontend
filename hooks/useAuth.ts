@@ -10,7 +10,7 @@ import { ChangePasswordForm } from '@/components/shared/change-forms/ChangeFormP
 import { AuthService } from '@/services/auth.service';
 import { errorCatch } from '@/api/api.helpers';
 
-export const useAuth = () => {
+export function useAuth() {
   const { replace, push } = useRouter();
 
   const loginMutation = useMutation({
@@ -66,4 +66,4 @@ export const useAuth = () => {
     logoutUser: logoutMutation.mutate,
     changePassword: changePasswordMutation.mutate,
   };
-};
+}

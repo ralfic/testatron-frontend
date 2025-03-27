@@ -18,6 +18,8 @@ export const TestService = {
       select: (data) => data.data,
     });
   },
+  publishTest: (id: number, data: Pick<ITest, 'expiresAt'>) =>
+    axiosWithAuth.patch(`/test/publish/${id}`, data),
   createTest: () => axiosWithAuth.post<ITest>('/test'),
   updateTest: (id: number, data: Partial<ITestUpdate>) =>
     axiosWithAuth.put<ITest>(`/test/${id}`, data),

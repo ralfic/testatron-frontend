@@ -3,7 +3,7 @@ import { useTestStore } from '@/store/useTestStore';
 import { useEffect } from 'react';
 import { TestService } from '@/services/test.service';
 
-export const useEditTest = (testId: number) => {
+export function useEditTest(testId: number) {
   const { setTest } = useTestStore();
 
   const test = useQuery({
@@ -21,4 +21,4 @@ export const useEditTest = (testId: number) => {
   }, [test.data, setTest]);
 
   return test;
-};
+}

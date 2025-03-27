@@ -6,10 +6,14 @@ export interface IUser {
 
 export interface ITest {
   id: number;
-  code: string;
+  code?: string;
+  isExpired: boolean;
+  expiresAt?: Date;
   title: string;
+  isPublished: boolean;
+  showCorrectAnswers: boolean;
+  showOptionsScore: boolean;
   description: string | null;
-  isGraduate: boolean;
   questions?: IQuestion[];
 }
 
@@ -20,6 +24,7 @@ export interface IQuestion {
   isRequired: boolean;
   text: string;
   testId: number;
+  score: number;
   options?: IOption[];
 }
 
@@ -44,7 +49,6 @@ export interface IOptionUpdate extends Omit<IOption, 'id' | 'questionId'> {
 }
 
 export enum QuestionType {
-  TEXT = 'TEXT',
   MULTIPLE = 'MULTIPLE',
   SINGLE = 'SINGLE',
 }

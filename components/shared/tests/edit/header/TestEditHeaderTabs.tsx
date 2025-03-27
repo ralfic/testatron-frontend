@@ -14,11 +14,16 @@ const tabs = [
 interface Props {
   currentTab: number;
   setCurrentTab: (tab: number) => void;
+  className?: string;
 }
 
-export function TestEditHeaderTabs({ currentTab, setCurrentTab }: Props) {
+export function TestEditHeaderTabs({
+  currentTab,
+  setCurrentTab,
+  className,
+}: Props) {
   return (
-    <div className="flex gap-4  items-center justify-center">
+    <div className={cn('flex gap-4  items-center justify-center', className)}>
       {tabs.map((tab) => (
         <p
           key={tab.id}
