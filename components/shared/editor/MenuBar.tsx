@@ -83,7 +83,7 @@ export const MenuBar = forwardRef<HTMLDivElement, Props>(
       >
         {MenuBarButtons.map(({ icon, onClick, disabled, pressed }, i) => (
           <Button
-            className={pressed ? 'bg-secondary' : ''}
+            className={pressed ? 'bg-muted' : ''}
             key={i}
             variant="ghost"
             size="icon"

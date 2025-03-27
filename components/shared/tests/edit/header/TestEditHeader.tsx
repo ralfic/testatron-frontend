@@ -1,11 +1,11 @@
 'use client';
 
 import { Container } from '@/components/shared/Container';
-import { Button } from '@/components/ui/button';
 import { prepareDataForBackend, useTestStore } from '@/store/useTestStore';
 import { useEffect } from 'react';
-import { TestEditHeaderTabs } from './TestEditHeaderTabs';
 import { useUpdateTest } from '@/hooks/useUpdateTest';
+import { TestPublishModal } from '../publish/TestPublishModal';
+import { TestEditHeaderTabs } from './TestEditHeaderTabs';
 
 interface Props {
   currentTab: number;
@@ -17,16 +17,15 @@ export function TestEditHeader({ setCurrentTab, currentTab }: Props) {
   const { handelUpdateTest, isPending } = useUpdateTest();
 
   useEffect(() => {
+    if (!test) return;
     const interval = setInterval(() => {
-      if (test) {
-        handelUpdateTest({
-          id: test.id,
-          data: prepareDataForBackend(test),
-        });
-      }
-    }, 10000);
+      handelUpdateTest({
+        id: test.id,
+        data: prepareDataForBackend(test),
+      });
+    }, 5000);
     return () => clearInterval(interval);
-  }, [handelUpdateTest]);
+  }, [handelUpdateTest, test]);
 
   return (
     <div className="bg-white fixed top-0 pt-2 left-0 right-0 z-10">
@@ -36,12 +35,22 @@ export function TestEditHeader({ setCurrentTab, currentTab }: Props) {
             <h1 className="text-4xl font-semibold">Edit test</h1>
             {isPending && <p className="text-sm text-gray-600"></p>}
           </div>
-          <Button>Publish</Button>
+          <TestPublishModal />
         </div>
-        <TestEditHeaderTabs
-          currentTab={currentTab}
-          setCurrentTab={setCurrentTab}
-        />
+        <div className="grid grid-cols-3 w-full max-w-[800px] mx-auto">
+          <TestEditHeaderTabs
+            className="col-start-2 col-end-2"
+            currentTab={currentTab}
+            setCurrentTab={setCurrentTab}
+          />
+          <p className="ml-auto">
+            <span>Total points: </span>
+            {test?.questions?.reduce(
+              (acc, question) => question.score + acc,
+              0
+            )}
+          </p>
+        </div>
       </Container>
     </div>
   );

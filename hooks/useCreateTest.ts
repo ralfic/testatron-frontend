@@ -3,7 +3,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 
-export const useCreateTest = () => {
+export function useCreateTest()  {
   const { replace } = useRouter();
 
   const createTestMutation = useMutation({

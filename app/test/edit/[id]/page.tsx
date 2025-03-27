@@ -1,11 +1,21 @@
+import { queryClient } from '@/api/queryClient';
 import { TestEditLayout } from '@/components/shared/tests/edit/TestEditLayout';
-
-export default async function CreateTest({
+import { TestService } from '@/services/test.service';
+import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
+export default async function EditTestPage({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
 
-  return <TestEditLayout testId={Number(id)} />;
+  await queryClient.prefetchQuery(
+    TestService.getTestByIdQueryOptions(Number(id))
+  );
+
+  return (
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <TestEditLayout testId={Number(id)} />
+    </HydrationBoundary>
+  );
 }

@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   title: 'Edit test',
 };
 
-export default function RootLayout({
+export default function EditTestLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

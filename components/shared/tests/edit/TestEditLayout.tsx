@@ -1,8 +1,8 @@
 'use client';
 import { Container } from '@/components/shared/Container';
-import { TestEditHeader } from './TestEditHeader';
+import { TestEditHeader } from './header/TestEditHeader';
 import { TestEditQuestions } from './TestEditQuestions';
-import { TestEditSettings } from './TestEditSettings';
+import { TestEditSettings } from './settings/TestEditSettings';
 import { useEffect, useState } from 'react';
 import { useEditTest } from '@/hooks/useEditTest';
 import { useTestStore } from '@/store/useTestStore';
