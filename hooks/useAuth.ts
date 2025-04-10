@@ -65,5 +65,9 @@ export function useAuth() {
     registerUser: registerMutation.mutate,
     logoutUser: logoutMutation.mutate,
     changePassword: changePasswordMutation.mutate,
+    isLoginPending: loginMutation.isPending,
+    isRegisterPending: registerMutation.isPending,
+    isLogoutPending: logoutMutation.isPending,
+    isChangePasswordPending: changePasswordMutation.isPending,
   };
 }

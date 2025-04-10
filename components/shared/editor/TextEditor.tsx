@@ -7,34 +7,24 @@ import OrderedList from '@tiptap/extension-ordered-list';
 import BulletList from '@tiptap/extension-bullet-list';
 import TextStyle from '@tiptap/extension-text-style';
 import { MenuBar } from './MenuBar';
-import { useState, useRef } from 'react';
+import { Label } from '@/components/ui/label';
 
 interface Props {
   text: string;
   setText: (text: string) => void;
   className?: string;
   withLists?: boolean;
+  label?: string;
+  placeholder?: string;
 }
 
 export function TextEditor({
   text,
   setText,
   className,
+  label,
   withLists = false,
 }: Props) {
-  const [hiddenMenu, setHiddenMenu] = useState(true);
-  const menuBarRef = useRef<HTMLDivElement>(null);
-
-  const handleBlur = (event: React.FocusEvent) => {
-    if (
-      menuBarRef.current &&
-      menuBarRef.current.contains(event.relatedTarget as Node)
-    ) {
-      return;
-    }
-    setHiddenMenu(true);
-  };
-
   const editor = useEditor({
     extensions: [StarterKit, Underline, TextStyle, OrderedList, BulletList],
     content: text,
@@ -42,28 +32,25 @@ export function TextEditor({
     editorProps: {
       attributes: {
         class: cn(
-          'focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 focus:border-cyan-300 transition-colors editor ',
-          className,
-          !hiddenMenu && 'border-b-2 '
+          'focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 border  p-2 rounded-sm transition-colors editor ',
+          withLists && 'min-h-[140px]',
+          className
         ),
       },
     },
   });
 
   return (
-    <div>
-      <EditorContent
-        className="focus-visible:right-0 "
-        editor={editor}
-        onFocus={() => setHiddenMenu(false)}
-        onBlur={handleBlur}
-      />
-      <MenuBar
-        withLists={withLists}
-        ref={menuBarRef}
-        editor={editor}
-        hidden={hiddenMenu}
-      />
+    <div className="w-full">
+      <div className="flex justify-between items-center">
+        {label && (
+          <Label className="text-sm font-medium leading-6 text-gray-900 dark:text-white">
+            {label}
+          </Label>
+        )}
+        <MenuBar withLists={withLists} editor={editor} />
+      </div>
+      <EditorContent className="focus-visible:right-0 " editor={editor} />
     </div>
   );
 }

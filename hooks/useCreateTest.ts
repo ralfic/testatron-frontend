@@ -1,20 +1,24 @@
+import { queryClient } from '@/api/queryClient';
 import { TestService } from '@/services/test.service';
+import { ITest } from '@/types';
 import { useMutation } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 
-export function useCreateTest()  {
-  const { replace } = useRouter();
-
+export function useCreateTest() {
   const createTestMutation = useMutation({
-    mutationFn: () => TestService.createTest(),
-    onSuccess: (data) => {
-      replace(`/test/edit/${data.data.id}`);
+    mutationFn: (data: Pick<ITest, 'title' | 'description'>) =>
+      TestService.createTest(data),
+    onSuccess: () => {
+      toast.success('Test created');
+      queryClient.invalidateQueries(TestService.getMyTestsQueryOptions());
     },
     onError: () => {
       toast.error('Failed to create test');
     },
   });
 
-  return createTestMutation;
-};
+  return {
+    handelCreateTest: createTestMutation.mutate,
+    isPending: createTestMutation.isPending,
+  };
+}
