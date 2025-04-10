@@ -1,49 +1,52 @@
 'use client';
 
-import { useTestStore } from '@/store/useTestStore';
-import { Button } from '@/components/ui/button';
 import { QuestionEditCard } from './question/QuestionEditCard';
 import { SectionEditCard } from './SectionEditCard';
-import { useState } from 'react';
 import { TestCardSkeleton } from '../TestCardSkeleton';
+import { ITest } from '@/types';
+import { QuestionEditModal } from './question/modal/QuestionEditModal';
 
 export function TestEditQuestions({
   isTestLoading,
+  test,
 }: {
   isTestLoading: boolean;
+  test?: ITest;
 }) {
-  const { test, addQuestion } = useTestStore();
-  const [focusElementId, setFocusElementId] = useState<string | number>('');
-
+  const totalScore = test?.questions?.reduce(
+    (acc, question) => acc + question.score,
+    0
+  );
   return (
-    <div className="flex flex-col gap-2 py-4 max-w-[800px] mx-auto pt-28">
-      {isTestLoading && <TestCardSkeleton count={4} />}
-      {!isTestLoading && test && (
-        <>
-          <SectionEditCard
-            focusElementId={focusElementId}
-            setFocus={() => setFocusElementId('header')}
-            title={test.title}
-            description={test.description}
-          />
+    <>
+      {test ? (
+        <div className="flex flex-col gap-2 py-4 max-w-[800px] mx-auto pt-[100px]">
+          {!isTestLoading && <SectionEditCard test={test} />}
+          <h1 className="text-2xl font-semibold">
+            {test?.questions?.length} questions (total score: {totalScore})
+          </h1>
 
-          {test?.questions?.map((question) => (
-            <QuestionEditCard
-              key={question.id}
-              question={question}
-              setFocus={() => setFocusElementId(question.id)}
-              focusQuestionId={focusElementId}
-            />
-          ))}
-        </>
+          {isTestLoading && <TestCardSkeleton count={4} />}
+          {!isTestLoading && (
+            <>
+              {test?.questions?.map((question) => (
+                <QuestionEditCard
+                  key={question.id}
+                  question={question}
+                  totalScore={totalScore}
+                />
+              ))}
+            </>
+          )}
+          {!isTestLoading && (
+            <QuestionEditModal testId={test.id} action="create" />
+          )}
+        </div>
+      ) : (
+        <div className="flex flex-col gap-2 py-4 max-w-[800px] mx-auto pt-[100px]">
+          <TestCardSkeleton count={4} />
+        </div>
       )}
-      <Button
-        size={'icon'}
-        className="rounded-full mx-auto"
-        onClick={() => addQuestion()}
-      >
-        +
-      </Button>
-    </div>
+    </>
   );
 }

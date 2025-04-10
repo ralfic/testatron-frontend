@@ -1,86 +1,68 @@
+'use client';
+
 import { RadioGroup } from '@/components/ui/radio-group';
-import { useTestStore } from '@/store/useTestStore';
 import { IQuestion } from '@/types';
 import { OptionEditCard } from '../option/OptionEditCard';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { QuestionEditCardBottom } from './QuestionEditCardBottom';
-import { useState } from 'react';
-import { QuestionEditCardHeader } from './QuestionEditCardHeader';
-import { QuestionEditAnswers } from './QuestionEditAnswers';
+import parser from 'html-react-parser';
+import { Trash } from 'lucide-react';
+import { QuestionEditModal } from './modal/QuestionEditModal';
+import { useDeleteQuestion } from '@/hooks/useDeleteQuestion';
 
 interface Props {
   question: IQuestion;
-  focusQuestionId: string | number;
-  setFocus: () => void;
+  totalScore?: number;
 }
 
-export function QuestionEditCard({
-  question,
-  focusQuestionId,
-  setFocus,
-}: Props) {
-  const addOption = useTestStore((store) => store.addOption);
-  const [isChoosingCorrectAnswers, setIsChoosingCorrectAnswers] =
-    useState(false);
-
+export function QuestionEditCard({ question, totalScore }: Props) {
+  const { handelDeleteQuestion, isPending } = useDeleteQuestion();
   return (
-    <div>
-      <div
-        key={question.id}
-        className={cn(
-          'flex gap-2 bg-white rounded-xl py-4 px-5 flex-col',
-          focusQuestionId === question.id && 'border-l-4 border-l-secondary'
-        )}
-        onClick={setFocus}
-      >
-        {isChoosingCorrectAnswers && (
-          <QuestionEditAnswers
-            question={question}
-            closeChoosingCorrectAnswers={() =>
-              setIsChoosingCorrectAnswers(false)
-            }
-          />
-        )}
-        {!isChoosingCorrectAnswers && (
-          <div>
-            <div className="w-full">
-              <QuestionEditCardHeader
-                question={question}
-                focusQuestionId={focusQuestionId}
-              />
-              <RadioGroup>
-                <div className="mt-2 flex flex-col gap-1">
-                  {question.options?.map((option) => (
-                    <OptionEditCard
-                      key={option.id}
-                      questionId={question.id}
-                      option={option}
-                      isFocus={question.id === focusQuestionId}
-                      type={question.type}
-                    />
-                  ))}
-                  {focusQuestionId === question.id && (
-                    <Button
-                      className="self-start mt-2"
-                      size={'sm'}
-                      onClick={() => addOption(question.id)}
-                    >
-                      Add new option
-                    </Button>
-                  )}
-                </div>
-              </RadioGroup>
+    <div
+      className={cn('flex gap-2 rounded-xl py-4 px-5 justify-between bg-card')}
+    >
+      <div className="w-full">
+        <div>
+          <div className="text-xl font-semibold">{parser(question.text)}</div>
+          {question.description && (
+            <div className=" text-gray-600 mt-2 editor">
+              {parser(question.description)}
             </div>
-
-            {focusQuestionId === question.id && (
-              <QuestionEditCardBottom
-                question={question}
-                onClick={() => setIsChoosingCorrectAnswers((prev) => !prev)}
+          )}
+        </div>
+        <RadioGroup>
+          <div className="mt-2 flex flex-col gap-2.5">
+            {question.options?.map((option) => (
+              <OptionEditCard
+                key={option.id}
+                option={option}
+                type={question.type}
               />
-            )}
+            ))}
           </div>
-        )}
+        </RadioGroup>
+      </div>
+      <div className="flex gap-2 ">
+        <div className="  text-sm text-white  text-nowrap inline-flex items-center justify-center border border-border p-2 bg-primary/35 rounded-lg h-9">
+          {question.score} / {totalScore}
+        </div>
+        <div className="flex flex-col gap-2">
+          <QuestionEditModal
+            question={question}
+            action="edit"
+            testId={question.testId}
+          />
+          <Button
+            variant="destructive"
+            size={'sm'}
+            disabled={isPending}
+            onClick={() =>
+              handelDeleteQuestion({ id: question.id, testId: question.testId })
+            }
+          >
+            <Trash />
+          </Button>
+        </div>
       </div>
     </div>
   );

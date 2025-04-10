@@ -1,41 +1,22 @@
-import { TextEditor } from '@/components/shared/editor/TextEditor';
 import { cn } from '@/lib/utils';
-import { useTestStore } from '@/store/useTestStore';
+import parser from 'html-react-parser';
+import { TestEditModal } from '../TestEditModal';
+import { ITest } from '@/types';
 
-interface Props {
-  title: string;
-  description: string | null;
-  focusElementId?: string | number;
-  setFocus?: () => void;
-}
-
-export function SectionEditCard({
-  title,
-  description,
-  focusElementId,
-  setFocus,
-}: Props) {
-  const { updateTestStore } = useTestStore();
-
+export function SectionEditCard({ test }: { test: ITest }) {
   return (
-    <div
-      className={cn(
-        'flex gap-2 bg-white rounded-xl  py-4 px-5 flex-col',
-        focusElementId === 'header' && 'border-l-4 border-l-secondary'
-      )}
-      onClick={setFocus}
-    >
-      <TextEditor
-        className="text-2xl font-semibold"
-        text={title}
-        setText={(text) => updateTestStore({ title: text })}
-      />
-      <TextEditor
-        text={description || ''}
-        setText={(text) => updateTestStore({ description: text })}
-        className="text-sm  "
-        withLists
-      />
+    <div className={cn('flex gap-2 bg-card rounded-xl  py-4 px-5 flex-col')}>
+      <div className="flex justify-between">
+        <div className="flex flex-col gap-2 justify-center">
+          <div className="text-2xl font-semibold">{parser(test.title)}</div>
+          {test.description && (
+            <div className="text-sm editor">{parser(test.description)}</div>
+          )}
+        </div>
+        <div className="flex flex-col gap-2">
+          <TestEditModal test={test} action="edit" />
+        </div>
+      </div>
     </div>
   );
 }

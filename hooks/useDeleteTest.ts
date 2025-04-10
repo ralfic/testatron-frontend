@@ -1,7 +1,7 @@
 import { TestService } from '@/services/test.service';
 import { ITest } from '@/types';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { AxiosResponse } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
 import { useRouter } from 'next/navigation';
 
 export function useDeleteTest() {
@@ -12,18 +12,14 @@ export function useDeleteTest() {
     AxiosResponse<void>,
     Error,
     number,
-    { previousTests?: AxiosResponse<ITest[], any> }
+    { previousTests?: AxiosResponse<ITest[], AxiosError> }
   >({
     mutationFn: (id: number) => TestService.deleteTest(id),
     onSettled: () => {
-      queryClient.invalidateQueries({
-        queryKey: [TestService.baseKey, 'list', 'my'],
-      });
+      queryClient.invalidateQueries(TestService.getMyTestsQueryOptions());
     },
     onMutate: async (variables) => {
-      await queryClient.cancelQueries({
-        queryKey: [TestService.baseKey, 'list', 'my'],
-      });
+      await queryClient.cancelQueries(TestService.getMyTestsQueryOptions());
 
       const previousTests = queryClient.getQueryData(
         TestService.getMyTestsQueryOptions().queryKey
@@ -52,7 +48,7 @@ export function useDeleteTest() {
   });
 
   return {
-    handleDelete: () => deleteTestMutation.mutate,
+    handleDelete: deleteTestMutation.mutate,
     isPending: deleteTestMutation.isPending,
   };
 }

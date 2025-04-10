@@ -1,13 +1,15 @@
 'use client';
 
-import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { InputForm } from '../form/InputForm';
 import { Button } from '@/components/ui/button';
 import { useProfile } from '@/hooks/useProfile';
 import { useRouter } from 'next/navigation';
 import { useChangeProfile } from '@/hooks/useChangeProfile';
+import { Form, FormField, FormItem, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
 const changeAccountSchema = z.object({
   fullName: z
@@ -22,14 +24,12 @@ export function ChangeFormAccount() {
   const { refresh } = useRouter();
   const { data: profile } = useProfile();
   const { handelChangeProfile, isPending } = useChangeProfile();
-  const methods = useForm<changeAccountForm>({
+  const form = useForm<changeAccountForm>({
     resolver: zodResolver(changeAccountSchema),
     defaultValues: {
       fullName: profile?.fullName || '',
     },
   });
-
-  const { handleSubmit } = methods;
 
   const onSubmit: SubmitHandler<changeAccountForm> = async (data) => {
     handelChangeProfile(data, {
@@ -39,22 +39,32 @@ export function ChangeFormAccount() {
   return (
     <div>
       <h2 className="text-xl font-bold mb-4">Account details</h2>
-      <FormProvider {...methods}>
-        <form className="pl-2" onSubmit={handleSubmit(onSubmit)}>
-          <div className="max-w-[400px]">
-            <InputForm
-              name="fullName"
-              label="Display name"
-              required
-              placeholder="Your name"
-            />
-          </div>
-
+      <Form {...form}>
+        <form
+          className="pl-2 max-w-[400px]"
+          onSubmit={form.handleSubmit(onSubmit)}
+        >
+          <FormField
+            control={form.control}
+            name="fullName"
+            render={({ field }) => (
+              <FormItem>
+                <Label>Full name</Label>
+                <Input
+                  {...field}
+                  name="fullName"
+                  required
+                  placeholder="Your name"
+                />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <Button loading={isPending} type="submit" className="mt-4">
             Save
           </Button>
         </form>
-      </FormProvider>
+      </Form>
     </div>
   );
 }

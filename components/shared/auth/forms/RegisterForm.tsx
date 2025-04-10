@@ -1,19 +1,20 @@
 'use client';
 
-import { useForm, FormProvider } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { RegisterData, registerSchema } from './schemas';
-import { InputForm } from '@/components/shared/form/InputForm';
 import { Button } from '@/components/ui/button';
-import { KeyRound, Mail, User } from 'lucide-react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useAuth } from '@/hooks/useAuth';
+import { Form, FormField, FormItem, FormMessage } from '@/components/ui/form';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
 
 interface Props {
   changeForm: () => void;
 }
 
 export function RegisterForm({ changeForm }: Props) {
-  const { registerUser } = useAuth();
+  const { registerUser, isRegisterPending } = useAuth();
 
   const form = useForm<RegisterData>({
     resolver: zodResolver(registerSchema),
@@ -30,30 +31,39 @@ export function RegisterForm({ changeForm }: Props) {
   };
 
   return (
-    <FormProvider {...form}>
+    <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-6">
-            <InputForm
+            <FormField
               name="fullName"
-              label="Full name"
-              required
-              placeholder="Full name"
-              Icon={User}
+              render={({ field }) => (
+                <FormItem>
+                  <Label>Full name</Label>
+                  <Input placeholder="Full name" {...field} type="text" />
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-            <InputForm
+            <FormField
               name="email"
-              label="Email"
-              required
-              placeholder="Email"
-              Icon={Mail}
+              render={({ field }) => (
+                <FormItem>
+                  <Label>Email</Label>
+                  <Input placeholder="Email" {...field} type="email" />
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-            <InputForm
+            <FormField
               name="password"
-              label="Password"
-              required
-              placeholder="Password"
-              Icon={KeyRound}
+              render={({ field }) => (
+                <FormItem>
+                  <Label>Password</Label>
+                  <Input placeholder="Password" {...field} type="password" />
+                  <FormMessage />
+                </FormItem>
+              )}
             />
           </div>
 
@@ -64,11 +74,11 @@ export function RegisterForm({ changeForm }: Props) {
             </p>
           </div>
 
-          <Button className="mt-4" type="submit">
+          <Button className="mt-4" type="submit" disabled={isRegisterPending}>
             Sign up
           </Button>
         </div>
       </form>
-    </FormProvider>
+    </Form>
   );
 }

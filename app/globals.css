@@ -10,45 +10,36 @@
   }
 }
 
-@theme {
-  --color-primary: oklch(75.85% 0.1356 182.34);
-  --color-secondary: oklch(70.4% 0.1657 241.71);
-  --color-accent: oklch(65.14% 0.2207 6.17);
-  --accent-primary: oklch(75.85% 0.1356 182.34);
-  --color-muted: 0 0% 96.1%;
-  --bg-card: 0 0% 100%;
-}
-
 @layer base {
   :root {
-    --background: 213 100% 98%; /* Светлый фон */
-    --foreground: 0 0% 3.9%; /* Темный текст */
+    --background: 325.71, 41.18%, 93.33%;
+    --foreground: 0 0% 3.9%;
 
-    --card: 0 0% 100%; /* Белые карточки */
-    --card-foreground: 0 0% 3.9%; /* Темный текст */
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
 
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 3.9%;
 
-    --primary: 174 100% 40%; /* Неоновый зеленый */
+    --primary: 310.41 39.2% 49.02%;
     --primary-foreground: 0 0% 98%;
 
-    --secondary: 200 98% 50%; /* Неоновый голубой */
+    --secondary: 314.35 39.66% 77.25%;
     --secondary-foreground: 0 0% 9%;
 
     --muted: 0 0% 96.1%;
     --muted-foreground: 0 0% 45.1%;
 
-    --accent: 340 90% 60%; /* Ярко-розовый */
+    --accent: 311.38 36.25% 68.63%;
     --accent-foreground: 0 0% 9%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 200 90% 40%;
+    --border: 314.35 39.66% 77.25%;
     --input: 220 90% 50%;
 
-    --ring: 174 100% 40%; /* Свечение зелёного цвета */
+    --ring: 314.35 39.66% 77.25%;
 
     --chart-1: 12 76% 61%;
     --chart-2: 173 58% 39%;
@@ -61,10 +52,10 @@
     --sidebar-background: 0 0% 100%;
     --sidebar-foreground: 0 0% 3.9%;
 
-    --sidebar-primary: 174 100% 40%;
+    --sidebar-primary: 310.41 39.2% 49.02%;
     --sidebar-primary-foreground: 0 0% 98%;
 
-    --sidebar-accent: 340 90% 60%;
+    --sidebar-accent: 311.38 36.25% 68.63%;
     --sidebar-accent-foreground: 240 5.9% 10%;
 
     --sidebar-border: 220 13% 91%;
@@ -72,34 +63,34 @@
   }
 
   .dark {
-    --background: 216 16% 6%;
-    --foreground: 0 0% 98%; /* Белый текст */
+    --background: 240 36.51% 12.35%;
+    --foreground: 0 0% 98%;
 
-    --card: 240 40% 10%; /* Темные карточки */
+    --card: 234.55 23.4% 18.43%;
     --card-foreground: 0 0% 98%;
 
     --popover: 240 40% 10%;
     --popover-foreground: 0 0% 98%;
 
-    --primary: 174 100% 50%; /* Неоновый зеленый */
-    --primary-foreground: 0 0% 9%;
+    --primary: 310.41 39.2% 49.02%;
+    --primary-foreground: 0 0% 98%;
 
-    --secondary: 200 98% 60%; /* Голубой неон */
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 317.73 43.14% 80%;
+    --secondary-foreground: 0 0% 9%;
 
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
+    --muted: 325.71 41.18% 93.33%;
+    --muted-foreground: 0 0% 45.1%;
 
-    --accent: 340 100% 65%; /* Ярко-розовый */
+    --accent: 311.38 36.25% 68.63%;
     --accent-foreground: 0 0% 98%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 200 90% 50%; /* Ярко-голубая обводка */
-    --input: 220 90% 60%; /* Электрический синий */
+    --border: 314.35 39.66% 77.25%;
+    --input: 220 90% 50%;
 
-    --ring: 174 100% 50%; /* Неоновое свечение зеленого */
+    --ring: 317.73 43.14% 80%;
 
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
@@ -107,16 +98,16 @@
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
 
-    --sidebar-background: 240 5.9% 10%;
+    --sidebar-background: 234.55 23.4% 18.43%;
     --sidebar-foreground: 240 4.8% 95.9%;
 
-    --sidebar-primary: 174 100% 40%;
+    --sidebar-primary: 310.41 39.2% 49.02%;
     --sidebar-primary-foreground: 0 0% 100%;
 
-    --sidebar-accent: 340 90% 55%;
+    --sidebar-accent: 311.38 36.25% 68.63%;
     --sidebar-accent-foreground: 240 4.8% 95.9%;
 
-    --sidebar-border: 200 90% 50%;
+    --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
@@ -135,17 +126,6 @@
   html,
   body {
     @apply h-full max-h-full;
-  }
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    @apply text-[#111111] dark:text-white;
-  }
-  p {
-    @apply text-[#222222] dark:text-[#E0E6ED];
   }
 }
 

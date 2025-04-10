@@ -8,7 +8,7 @@ export default function NavigationMenu() {
         {navPath.map((item) => (
           <li key={item.name}>
             <Link
-              className="text-lg font-poppins  hover:font-semibold ease-in duration-75 "
+              className="text-lg font-poppins hover:underline ease-in-out transition-all hover:text-secondary duration-75 "
               href={item.path}
             >
               {item.name}

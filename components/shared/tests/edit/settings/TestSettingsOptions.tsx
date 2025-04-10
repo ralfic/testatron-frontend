@@ -1,13 +1,13 @@
 'use client';
+import { FormControl, FormField } from '@/components/ui/form';
 import { Switch } from '@/components/ui/switch';
-import { useTestStore } from '@/store/useTestStore';
+import { ITest } from '@/types';
 
-export function TestSettingsOptions() {
-  const updateTestStore = useTestStore((store) => store.updateTestStore);
-  const test = useTestStore((store) => store.test);
+interface Props {
+  test: ITest;
+}
 
-  if (!test) return null;
-
+export function TestSettingsOptions({ test }: Props) {
   return (
     <div className="flex flex-col  gap-2 pb-4 ">
       <div className="flex items-center gap-2 justify-between">
@@ -17,13 +17,17 @@ export function TestSettingsOptions() {
             Show correct answers after submission
           </p>
         </div>
-        <Switch
-          onCheckedChange={(checked) => {
-            updateTestStore({
-              showCorrectAnswers: checked,
-            });
-          }}
-          checked={test.showCorrectAnswers}
+        <FormField
+          name="showCorrectAnswers"
+          control={null}
+          render={({ field }) => (
+            <FormControl>
+              <Switch
+                onCheckedChange={(checked) => field.onChange(checked)}
+                checked={field.value}
+              />
+            </FormControl>
+          )}
         />
       </div>
       <div className="flex items-center gap-2 justify-between">
@@ -32,9 +36,7 @@ export function TestSettingsOptions() {
           <p className="text-sm text-gray-500">Show score for each answer</p>
         </div>
         <Switch
-          onCheckedChange={(checked) =>
-            updateTestStore({ showOptionsScore: checked })
-          }
+          onCheckedChange={(checked) => {}}
           checked={test.showOptionsScore}
         />
       </div>

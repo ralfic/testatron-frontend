@@ -11,7 +11,7 @@ export default function Header() {
   const [isOpen, onClose] = useState(false);
 
   return (
-    <header className="pt-8 mb-10">
+    <header className="pt-8  mb-10">
       <Container className="grid grid-cols-3 items-center ">
         <Logo />
         <NavigationMenu />

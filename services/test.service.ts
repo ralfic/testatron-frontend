@@ -1,5 +1,5 @@
 import { axiosWithAuth } from '@/services/instance';
-import { ITest, ITestUpdate } from '@/types';
+import { IQuestionCreate, IQuestionUpdate, ITest, ITestPublish } from '@/types';
 import { queryOptions } from '@tanstack/react-query';
 
 export const TestService = {
@@ -18,10 +18,17 @@ export const TestService = {
       select: (data) => data.data,
     });
   },
-  publishTest: (id: number, data: Pick<ITest, 'expiresAt'>) =>
+  updateTestInfo: (id: number, data: Pick<ITest, 'title' | 'description'>) =>
+    axiosWithAuth.patch(`/test/${id}`, data),
+  publishTest: (id: number, data: ITestPublish) =>
     axiosWithAuth.patch(`/test/publish/${id}`, data),
-  createTest: () => axiosWithAuth.post<ITest>('/test'),
-  updateTest: (id: number, data: Partial<ITestUpdate>) =>
-    axiosWithAuth.put<ITest>(`/test/${id}`, data),
+  createTest: (data: Pick<ITest, 'title' | 'description'>) =>
+    axiosWithAuth.post<ITest>('/test', data),
   deleteTest: (id: number) => axiosWithAuth.delete(`/test/${id}`),
+  createQuestion: (id: number, data: IQuestionCreate) =>
+    axiosWithAuth.post(`/test/${id}/question`, data),
+  deleteQuestion: (testId: number, id: number) =>
+    axiosWithAuth.delete(`/test/${testId}/question/${id}`),
+  updateQuestion: (testId: number, id: number, data: IQuestionUpdate) =>
+    axiosWithAuth.patch(`/test/${testId}/question/${id}`, data),
 };
