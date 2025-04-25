@@ -19,9 +19,15 @@ interface Props {
     showCorrectAnswers: boolean;
     showQuestionScore: boolean;
   }>;
+  defaultDay: number;
+  defaultHour: number;
 }
 
-export function TestPublishExpireAt({ fromControl }: Props) {
+export function TestPublishExpireAt({
+  fromControl,
+  defaultDay,
+  defaultHour,
+}: Props) {
   const {
     expiryOptionsDays,
     expiryOptionsHours,
@@ -40,8 +46,8 @@ export function TestPublishExpireAt({ fromControl }: Props) {
               <FormControl>
                 <SelectTrigger className="w-[180px]">
                   <SelectValue
-                    defaultValue={expiryOptionsDays[0]}
-                    placeholder={expiryOptionsDaysFormatted[0]}
+                    defaultValue={expiryOptionsDays[defaultDay]}
+                    placeholder={expiryOptionsDaysFormatted[defaultDay]}
                   />
                 </SelectTrigger>
               </FormControl>
@@ -65,8 +71,8 @@ export function TestPublishExpireAt({ fromControl }: Props) {
               <FormControl>
                 <SelectTrigger className="w-[180px]">
                   <SelectValue
-                    defaultValue={expiryOptionsHours[0]}
-                    placeholder={expiryOptionsHoursFormatted[0]}
+                    defaultValue={expiryOptionsHours[defaultHour]}
+                    placeholder={expiryOptionsHoursFormatted[defaultHour]}
                   />
                 </SelectTrigger>
               </FormControl>
