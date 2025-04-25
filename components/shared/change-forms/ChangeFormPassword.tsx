@@ -4,10 +4,10 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/button';
-import { useAuth } from '@/hooks/useAuth';
 import { Form, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { useChangeUserPassword } from '@/hooks/useChangeUserPassword';
 
 const changePasswordSchema = z.object({
   currentPassword: z.string(),
@@ -18,7 +18,7 @@ const changePasswordSchema = z.object({
 export type ChangePasswordForm = z.infer<typeof changePasswordSchema>;
 
 export function ChangeFormPassword() {
-  const { changePassword } = useAuth();
+  const { handelChangePassword, isPending } = useChangeUserPassword();
 
   const form = useForm<ChangePasswordForm>({
     resolver: zodResolver(changePasswordSchema),
@@ -32,7 +32,7 @@ export function ChangeFormPassword() {
   const onSubmit: SubmitHandler<ChangePasswordForm> = async (data) => {
     const { newPassword, currentPassword, confirmNewPassword } = data;
 
-    changePassword(
+    handelChangePassword(
       {
         newPassword,
         currentPassword,
@@ -89,7 +89,7 @@ export function ChangeFormPassword() {
               )}
             />
           </div>
-          <Button type="submit" className="mt-4">
+          <Button type="submit" className="mt-4" disabled={isPending}>
             Save
           </Button>
         </form>

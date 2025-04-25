@@ -4,7 +4,6 @@ import {
   LoginData,
   RegisterData,
 } from '@/components/shared/auth/forms/schemas';
-import { ChangePasswordForm } from '@/components/shared/change-forms/ChangeFormPassword';
 
 export const AuthService = {
   login: (data: LoginData) => {
@@ -15,8 +14,5 @@ export const AuthService = {
   },
   logout: () => {
     return axiosWithAuth.post('/auth/logout');
-  },
-  changePassword: (data: ChangePasswordForm) => {
-    return axiosWithAuth.put('/auth/change-password', data);
   },
 };

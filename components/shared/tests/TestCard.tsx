@@ -22,6 +22,7 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { useDeleteTest } from '@/hooks/useDeleteTest';
+import toast from 'react-hot-toast';
 
 interface Props {
   test: Omit<ITest, 'questions'>;
@@ -77,6 +78,7 @@ export function TestCard({ test }: Props) {
           </div>
         </div>
       </div>
+
       <div className="flex gap-2 items-center">
         <Link
           href={`/test/edit/${test.id}`}
@@ -89,7 +91,16 @@ export function TestCard({ test }: Props) {
         </Link>
 
         {test.status === TestStatus.PUBLISHED && (
-          <Button variant="secondary" size={'icon'}>
+          <Button
+            variant="secondary"
+            size={'icon'}
+            onClick={() => {
+              navigator.clipboard.writeText(
+                window.location.origin + `/test/join?code=${test.code}`
+              );
+              toast.success('Code copied to clipboard');
+            }}
+          >
             <RiShareForwardFill className="w-6 h-6 dark:invert" />
           </Button>
         )}
