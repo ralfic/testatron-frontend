@@ -1,6 +1,7 @@
 import { IUser } from '@/types';
 import { axiosWithAuth } from './instance';
 import { queryOptions } from '@tanstack/react-query';
+import { ChangePasswordForm } from '@/components/shared/change-forms/ChangeFormPassword';
 
 export const UserService = {
   baseKey: 'user',
@@ -13,4 +14,7 @@ export const UserService = {
     }),
   changeProfile: (data: Pick<IUser, 'fullName'>) =>
     axiosWithAuth.put('/profile', data),
+  changePassword: (data: ChangePasswordForm) => {
+    return axiosWithAuth.put('/auth/change-password', data);
+  },
 };

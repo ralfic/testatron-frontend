@@ -7,7 +7,6 @@ export interface IUser {
 export interface ITest {
   id: number;
   code?: string;
-  isExpired: boolean;
   expiresAt?: Date;
   title: string;
   status: TestStatus;
@@ -21,6 +20,17 @@ export interface ITest {
 export type ITestPublish = Pick<
   ITest,
   'expiresAt' | 'showCorrectAnswers' | 'showQuestionScore'
+>;
+
+export type ITestUpdateInfo = Partial<
+  Pick<
+    Omit<ITest, 'questions'>,
+    | 'title'
+    | 'description'
+    | 'expiresAt'
+    | 'showCorrectAnswers'
+    | 'showQuestionScore'
+  >
 >;
 
 export interface IQuestion {
@@ -58,6 +68,48 @@ export interface IQuestionCreate
   options?: IOptionCreate[];
 }
 
+export interface IAnswer {
+  testSessionId: number;
+  questionId: number;
+  selectedOptions?: IOption[];
+  id: number;
+}
+
+interface IAnswerResult extends IAnswer {
+  status: AnswerStatus;
+  score: number;
+}
+
+export interface ITestSession {
+  id: number;
+  status: TestSessionStatus;
+  guestName: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+  testId: number;
+  uuid: string;
+  userId: number | null;
+  test: Pick<ITest, 'questions' | 'code'>;
+  answers: IAnswer[];
+}
+
+interface ITestSessionWithResult
+  extends Omit<ITestSession, 'answers' | 'test'> {
+  completedAt: string | number | Date;
+  answers: IAnswerResult[];
+  test: ITest;
+}
+
+export interface ITestResult {
+  id: number;
+  testSession: ITestSessionWithResult;
+  score: number;
+  countCorrect: number;
+  countWrong: number;
+  countAlmostCorrect: number;
+  countSkipped: number;
+}
+
 export type IOptionCreate = Omit<IOption, 'id' | 'questionId'>;
 
 export enum QuestionType {
@@ -69,4 +121,16 @@ export enum TestStatus {
   DRAFT = 'DRAFT',
   PUBLISHED = 'PUBLISHED',
   EXPIRED = 'EXPIRED',
+}
+
+export enum TestSessionStatus {
+  IN_PROGRESS = 'IN_PROGRESS',
+  FINISHED = 'FINISHED',
+}
+
+enum AnswerStatus {
+  CORRECT = 'CORRECT',
+  INCORRECT = 'INCORRECT',
+  ALMOST_CORRECT = 'ALMOST_CORRECT',
+  SKIPPED = 'SKIPPED',
 }

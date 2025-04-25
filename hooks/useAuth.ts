@@ -6,9 +6,7 @@ import {
   RegisterData,
 } from '@/components/shared/auth/forms/schemas';
 
-import { ChangePasswordForm } from '@/components/shared/change-forms/ChangeFormPassword';
 import { AuthService } from '@/services/auth.service';
-import { errorCatch } from '@/api/api.helpers';
 
 export function useAuth() {
   const { replace, push } = useRouter();
@@ -49,25 +47,12 @@ export function useAuth() {
     },
   });
 
-  const changePasswordMutation = useMutation({
-    mutationKey: ['change-password'],
-    mutationFn: (data: ChangePasswordForm) => AuthService.changePassword(data),
-    onSuccess: () => {
-      toast.success('Password changed successfully');
-    },
-    onError: (error) => {
-      toast.error(errorCatch(error));
-    },
-  });
-
   return {
     loginUser: loginMutation.mutate,
     registerUser: registerMutation.mutate,
     logoutUser: logoutMutation.mutate,
-    changePassword: changePasswordMutation.mutate,
     isLoginPending: loginMutation.isPending,
     isRegisterPending: registerMutation.isPending,
     isLogoutPending: logoutMutation.isPending,
-    isChangePasswordPending: changePasswordMutation.isPending,
   };
 }

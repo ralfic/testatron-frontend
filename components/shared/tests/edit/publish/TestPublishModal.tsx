@@ -17,22 +17,30 @@ import { useForm } from 'react-hook-form';
 import { FormControl, FormField, Form } from '@/components/ui/form';
 import { Switch } from '@/components/ui/switch';
 import { useExpiresAt } from '@/hooks/useExpiresAt';
+import { useUpdateTestInfo } from '@/hooks/useUpdateTestInfo';
 
 export function TestPublishModal({ test }: { test: ITest }) {
   const { expiryOptionsDays, expiryOptionsHours } = useExpiresAt();
+  const defaultDay = test.expiresAt
+    ? new Date(test.expiresAt).getDay() - new Date().getDay()
+    : 0;
+  const defaultHour = test.expiresAt ? new Date(test.expiresAt).getHours() : 0;
+
+  const defaultValues = {
+    expiresAt: {
+      day: expiryOptionsDays[defaultDay],
+      hour: expiryOptionsHours[defaultHour],
+    },
+    showCorrectAnswers: test.showCorrectAnswers,
+    showQuestionScore: test.showQuestionScore,
+  };
 
   const form = useForm({
     mode: 'onSubmit',
-    defaultValues: {
-      expiresAt: {
-        day: expiryOptionsDays[0],
-        hour: expiryOptionsHours[0],
-      },
-      showCorrectAnswers: false,
-      showQuestionScore: false,
-    },
+    defaultValues,
   });
   const { handelPublishTest, isPending } = usePublishTest();
+  const { handelUpdateTest, isPending: isUpdatePending } = useUpdateTestInfo();
   const [isOpen, setIsOpen] = useState(false);
 
   if (!test) return null;
@@ -42,20 +50,38 @@ export function TestPublishModal({ test }: { test: ITest }) {
     showCorrectAnswers: boolean;
     showQuestionScore: boolean;
   }) {
-    handelPublishTest(
-      {
-        id: test.id,
-        data: {
-          ...data,
-          expiresAt: new Date(data.expiresAt.day + data.expiresAt.hour),
+    if (test.status === TestStatus.PUBLISHED) {
+      handelUpdateTest(
+        {
+          id: test.id,
+          data: {
+            expiresAt: new Date(data.expiresAt.day + data.expiresAt.hour),
+            showCorrectAnswers: data.showCorrectAnswers,
+            showQuestionScore: data.showQuestionScore,
+          },
         },
-      },
-      {
-        onSuccess: () => {
-          setIsOpen(false);
+        {
+          onSuccess: () => {
+            setIsOpen(false);
+          },
+        }
+      );
+    } else {
+      handelPublishTest(
+        {
+          id: test.id,
+          data: {
+            ...data,
+            expiresAt: new Date(data.expiresAt.day + data.expiresAt.hour),
+          },
         },
-      }
-    );
+        {
+          onSuccess: () => {
+            setIsOpen(false);
+          },
+        }
+      );
+    }
   }
 
   return (
@@ -72,8 +98,10 @@ export function TestPublishModal({ test }: { test: ITest }) {
             <span className="text-gray-500">Title:</span>
             {parser(test?.title)}
           </div>
-          <div className="editor " >
-            <span className="text-gray-500 dark:text-gray-200">Description:</span>
+          <div className="editor ">
+            <span className="text-gray-500 dark:text-gray-200">
+              Description:
+            </span>
             {parser(test?.description || '')}
           </div>
 
@@ -81,7 +109,11 @@ export function TestPublishModal({ test }: { test: ITest }) {
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <div>
                 <p className="text-gray-500 ">Expires at:</p>
-                <TestPublishExpireAt fromControl={form.control} />
+                <TestPublishExpireAt
+                  fromControl={form.control}
+                  defaultDay={defaultDay}
+                  defaultHour={defaultHour}
+                />
               </div>
 
               <div>
@@ -130,16 +162,24 @@ export function TestPublishModal({ test }: { test: ITest }) {
                 </div>
               </div>
               <div className="px-4">
-                <Button className="w-full" disabled={isPending} type="submit">
-                  Publish
+                <Button
+                  className="w-full"
+                  disabled={isPending || isUpdatePending}
+                  type="submit"
+                >
+                  {test.status === TestStatus.PUBLISHED
+                    ? 'Save changes'
+                    : 'Publish'}
                 </Button>
               </div>
             </form>
           </Form>
         </div>
       </DialogContent>
-      <DialogTrigger disabled={test.status === TestStatus.PUBLISHED} asChild>
-        <Button disabled={test.status === TestStatus.PUBLISHED}>Publish</Button>
+      <DialogTrigger asChild>
+        <Button>
+          {test.status === TestStatus.PUBLISHED ? 'Edit' : 'Publish'}
+        </Button>
       </DialogTrigger>
     </Dialog>
   );

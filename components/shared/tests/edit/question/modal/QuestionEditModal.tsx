@@ -105,6 +105,27 @@ export function QuestionEditModal({ question, action, testId }: Props) {
         score: question.score,
         options: question.options,
       });
+    } else {
+      form.reset({
+        text: '',
+        description: '',
+        type: QuestionType.SINGLE,
+        score: 3,
+        options: [
+          {
+            id: undefined,
+            questionId: undefined,
+            text: '',
+            isCorrect: true,
+          },
+          {
+            id: undefined,
+            questionId: undefined,
+            text: '',
+            isCorrect: false,
+          },
+        ],
+      });
     }
   }, [isOpen]);
 
