@@ -1,5 +1,3 @@
-'use client';
-
-export default function Home() {
-  return <main className="w-full"></main>;
+export default function HomePage() {
+  return <div className="w-full">Home</div>;
 }

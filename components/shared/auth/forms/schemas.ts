@@ -1,3 +1,4 @@
+import { UserRole } from '@/types';
 import z from 'zod';
 
 export const passwordSchema = z
@@ -14,6 +15,7 @@ export const registerSchema = loginFormSchema.extend({
     .string()
     .min(3, { message: 'Full name must be at least 3 characters' })
     .max(32, { message: 'Full name must be less than 32 characters' }),
+  role: z.nativeEnum(UserRole).default(UserRole.STUDENT),
 });
 
 export type LoginData = z.infer<typeof loginFormSchema>;

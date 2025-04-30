@@ -2,7 +2,7 @@ import { Container } from '@/components/shared/Container';
 import { DashboardSidebar } from '@/components/shared/DashboardSidebar';
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 
-export default function UserLayout({
+export default function TeacherLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -12,7 +12,7 @@ export default function UserLayout({
       <DashboardSidebar />
       <main className="w-full">
         <SidebarTrigger />
-        <Container> {children}</Container>
+        <Container className="h-full"> {children}</Container>
       </main>
     </SidebarProvider>
   );

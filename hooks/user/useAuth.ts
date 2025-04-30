@@ -7,6 +7,9 @@ import {
 } from '@/components/shared/auth/forms/schemas';
 
 import { AuthService } from '@/services/auth.service';
+import { UserRole } from '@/types';
+import { queryClient } from '@/api/queryClient';
+import { UserService } from '@/services/user.service';
 
 export function useAuth() {
   const { replace, push } = useRouter();
@@ -16,7 +19,11 @@ export function useAuth() {
     mutationFn: (data: LoginData) => AuthService.login(data),
     onSuccess: (data) => {
       toast.success(`Welcome ${data.data.fullName}`);
-      push('/i/dashboard');
+      push(
+        `/${
+          data.data.role === UserRole.STUDENT ? 'student' : 'teacher'
+        }/dashboard`
+      );
     },
 
     onError: () => {
@@ -29,7 +36,11 @@ export function useAuth() {
     mutationFn: (data: RegisterData) => AuthService.register(data),
     onSuccess: (data) => {
       toast.success(`Welcome ${data.data.fullName}`);
-      push('/i/dashboard');
+      push(
+        `/${
+          data.data.role === UserRole.STUDENT ? 'student' : 'teacher'
+        }/dashboard`
+      );
     },
     onError: () => {
       toast.error('Failed to register');
@@ -40,6 +51,7 @@ export function useAuth() {
     mutationKey: ['logout'],
     mutationFn: () => AuthService.logout(),
     onSuccess: () => {
+      queryClient.invalidateQueries(UserService.getProfileQueryOptions());
       replace('/');
     },
     onError: () => {

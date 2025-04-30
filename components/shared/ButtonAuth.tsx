@@ -1,8 +1,9 @@
 'use client';
 
-import { useProfile } from '@/hooks/useProfile';
+import { useProfile } from '@/hooks/user/useProfile';
 import { Button } from '../ui/button';
 import { useRouter } from 'next/navigation';
+import { UserRole } from '@/types';
 
 interface Props {
   onClose: () => void;
@@ -17,7 +18,11 @@ export function ButtonAuth({ onClose }: Props) {
       className="ml-auto"
       onClick={() => {
         if (profile) {
-          router.push('/i/dashboard');
+          router.push(
+            `/${
+              profile.role === UserRole.STUDENT ? 'student' : 'teacher'
+            }/dashboard`
+          );
         } else {
           onClose();
         }

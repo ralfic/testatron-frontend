@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Form, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useChangeUserPassword } from '@/hooks/useChangeUserPassword';
+import { useChangeUserPassword } from '@/hooks/user/useChangeUserPassword';
 
 const changePasswordSchema = z.object({
   currentPassword: z.string(),

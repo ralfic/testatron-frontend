@@ -17,4 +17,11 @@ export const UserService = {
   changePassword: (data: ChangePasswordForm) => {
     return axiosWithAuth.put('/auth/change-password', data);
   },
+  getProfile: (session: string) => {
+    return axiosWithAuth.get<IUser>('/profile', {
+      headers: {
+        Cookie: `connect.sid=${session}`,
+      },
+    });
+  },
 };

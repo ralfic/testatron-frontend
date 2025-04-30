@@ -1,4 +1,4 @@
-import { TogglerTheme } from '../TogglerTheme';
+import { TogglerTheme } from '../../TogglerTheme';
 
 export function PreferencesSettings() {
   return (

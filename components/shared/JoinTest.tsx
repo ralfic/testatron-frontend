@@ -8,7 +8,7 @@ import { useSearchParams } from 'next/navigation';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Label } from '../ui/label';
-import { useJoinTest } from '@/hooks/useJoinTest';
+import { useJoinTest } from '@/hooks/test/passing/useJoinTest';
 
 const formSchema = z.object({
   code: z.string().min(1, { message: 'Code is required' }),
@@ -18,7 +18,7 @@ const formSchema = z.object({
 export type JoinTestFormData = z.infer<typeof formSchema>;
 
 export function JoinTest() {
-  const {handelJoinTest, isPending} = useJoinTest()
+  const { handelJoinTest, isPending } = useJoinTest();
   const searchParams = useSearchParams();
 
   const form = useForm({
@@ -42,18 +42,28 @@ export function JoinTest() {
       <h1 className="text-4xl font-semibold">Join Test</h1>
       <div className="flex gap-4 flex-col w-full">
         <Form {...form}>
-          <form className='w-full' onSubmit={form.handleSubmit(onSubmit)}>
+          <form className="w-full" onSubmit={form.handleSubmit(onSubmit)}>
             <div className="flex flex-col gap-2 ">
               <FormField
                 name="code"
                 render={({ field }) => (
-                 <FormItem> <Label >Code</Label><Input placeholder="Code" {...field} type="text" /><FormMessage /></FormItem>
+                  <FormItem>
+                    {' '}
+                    <Label>Code</Label>
+                    <Input placeholder="Code" {...field} type="text" />
+                    <FormMessage />
+                  </FormItem>
                 )}
               />
               <FormField
                 name="guestName"
                 render={({ field }) => (
-                  <FormItem> <Label>Your name</Label><Input placeholder="Your name" {...field} type="text" /><FormMessage /></FormItem>
+                  <FormItem>
+                    {' '}
+                    <Label>Your name</Label>
+                    <Input placeholder="Your name" {...field} type="text" />
+                    <FormMessage />
+                  </FormItem>
                 )}
               />
             </div>

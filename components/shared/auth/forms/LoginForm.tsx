@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { LoginData, loginFormSchema } from './schemas';
 import { Button } from '@/components/ui/button';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useAuth } from '@/hooks/useAuth';
+import { useAuth } from '@/hooks/user/useAuth';
 import { Form, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
@@ -35,7 +35,7 @@ export function LoginForm({ changeForm }: Props) {
         className="flex flex-col gap-4"
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-4">
           <FormField
             name="email"
             render={({ field }) => (
