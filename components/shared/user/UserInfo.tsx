@@ -1,6 +1,6 @@
 'use client';
 import { AvatarFallback } from '@/components/ui/avatar';
-import { useProfile } from '@/hooks/useProfile';
+import { useProfile } from '@/hooks/user/useProfile';
 import { Avatar } from '@radix-ui/react-avatar';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';

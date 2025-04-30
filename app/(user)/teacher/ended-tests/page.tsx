@@ -1,22 +1,25 @@
 'use client';
-
 import { SearchInput } from '@/components/shared/SearchInput';
 import { TestEditModal } from '@/components/shared/tests/TestEditModal';
 import { TestsList } from '@/components/shared/tests/TestList';
-import { TestService } from '@/services/test.service';
-import { useQuery } from '@tanstack/react-query';
+import { useDebounce } from '@/hooks/useDebounce';
+import { useGetTestsList } from '@/hooks/test/useGetTestsList';
+import { useState } from 'react';
 
-export default function Dashboard() {
-  const { data: tests, isLoading } = useQuery(
-    TestService.getMyTestsQueryOptions()
-  );
+export default function EndedTests() {
+  const { data: tests, isLoading } = useGetTestsList({ status: 'expired' });
+  const [searchValue, setSearchValue] = useState('');
+  const debouncedValue = useDebounce(searchValue, 500);
 
   return (
     <div className="tracking-wider px-10 flex gap-4">
       <div className="max-w-[600px] flex-grow">
         <div className="flex flex-col gap-4 mb-4">
-          <h1 className="text-4xl font-semibold">Dashboard</h1>
-          <SearchInput />
+          <h1 className="text-4xl font-semibold">Ended tests</h1>
+          <SearchInput
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+          />
         </div>
         {tests && (
           <TestsList

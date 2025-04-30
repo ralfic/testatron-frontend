@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { RadioGroupItem } from '@/components/ui/radio-group';
-import { useAnswerQuestion } from '@/hooks/useAnswerQuestion';
+import { useAnswerQuestion } from '@/hooks/test/passing/useAnswerQuestion';
 import { IAnswer, IOption, IQuestion, QuestionType } from '@/types';
 import parser from 'html-react-parser';
 import { useEffect, useState } from 'react';

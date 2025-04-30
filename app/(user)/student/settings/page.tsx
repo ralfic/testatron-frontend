@@ -1,5 +1,5 @@
-import { AccountSettings } from '@/components/shared/settings/AccountSettings';
-import { PreferencesSettings } from '@/components/shared/settings/PreferencesSettings';
+import { AccountSettings } from '@/components/shared/user/settings/AccountSettings';
+import { PreferencesSettings } from '@/components/shared/user/settings/PreferencesSettings';
 import {
   Accordion,
   AccordionContent,

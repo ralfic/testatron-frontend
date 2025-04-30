@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { queryClient } from './api/queryClient';
 import { TestService } from './services/test.service';
-import { TestSessionStatus } from './types';
+import { TestSessionStatus, UserRole } from './types';
+import { UserService } from './services/user.service';
 
 export async function middleware(req: NextRequest) {
   const session = req.cookies.get('connect.sid')?.value;
@@ -23,10 +23,7 @@ export async function middleware(req: NextRequest) {
     }
 
     try {
-      const testSession = await queryClient.fetchQuery(
-        TestService.getTestSessionByUuidQueryOptions(uuid)
-      );
-
+      const testSession = await TestService.getTestSessionByUuid(uuid);
       console.log(testSession.data.status);
 
       if (
@@ -48,9 +45,40 @@ export async function middleware(req: NextRequest) {
     }
   }
 
+  if (
+    (currentPath.startsWith('/teacher') ||
+      currentPath.startsWith('/student')) &&
+    session
+  ) {
+    try {
+      const data = await UserService.getProfile(session);
+      const role = data.data.role;
+
+      if (role === UserRole.TEACHER && currentPath.startsWith('/student')) {
+        return NextResponse.redirect(new URL('/teacher/dashboard', req.url));
+      } else if (
+        role === UserRole.STUDENT &&
+        currentPath.startsWith('/teacher')
+      ) {
+        return NextResponse.redirect(new URL('/student/dashboard', req.url));
+      }
+    } catch (error) {
+      console.error('Error fetching user profile:', error);
+      return NextResponse.redirect(new URL('/', req.url));
+    }
+  }
+
+  if (
+    (currentPath.startsWith('/teacher') ||
+      currentPath.startsWith('/student')) &&
+    !session
+  ) {
+    return NextResponse.redirect(new URL('/', req.url));
+  }
+
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ['/i/:path*', '/test/:path*'],
+  matcher: ['/teacher/:path*', '/test/:path*', '/student/:path*'],
 };

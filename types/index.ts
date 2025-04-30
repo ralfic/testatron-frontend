@@ -2,6 +2,13 @@ export interface IUser {
   email: string;
   fullName: string;
   id: string;
+  role: UserRole;
+}
+
+export enum UserRole {
+  ADMIN = 'ADMIN',
+  TEACHER = 'TEACHER',
+  STUDENT = 'STUDENT',
 }
 
 export interface ITest {
@@ -73,6 +80,8 @@ export interface IAnswer {
   questionId: number;
   selectedOptions?: IOption[];
   id: number;
+  score: number;
+  status: AnswerStatus;
 }
 
 interface IAnswerResult extends IAnswer {
@@ -90,6 +99,7 @@ export interface ITestSession {
   uuid: string;
   userId: number | null;
   test: Pick<ITest, 'questions' | 'code'>;
+  endedAt?: Date;
   answers: IAnswer[];
 }
 
@@ -128,7 +138,7 @@ export enum TestSessionStatus {
   FINISHED = 'FINISHED',
 }
 
-enum AnswerStatus {
+export enum AnswerStatus {
   CORRECT = 'CORRECT',
   INCORRECT = 'INCORRECT',
   ALMOST_CORRECT = 'ALMOST_CORRECT',

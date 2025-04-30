@@ -2,7 +2,7 @@
 import { Container } from '@/components/shared/Container';
 import { TestEditHeader } from './header/TestEditHeader';
 import { TestEditQuestions } from './TestEditQuestions';
-import { useGetTestById } from '@/hooks/useGetTestById';
+import { useGetTestById } from '@/hooks/test/useGetTestById';
 
 interface Props {
   testId: number;

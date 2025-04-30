@@ -15,8 +15,8 @@ import { Form, FormField, FormItem } from '@/components/ui/form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ITest } from '@/types';
-import { useCreateTest } from '@/hooks/useCreateTest';
-import { useUpdateTestInfo } from '@/hooks/useUpdateTestInfo';
+import { useCreateTest } from '@/hooks/test/useCreateTest';
+import { useUpdateTestInfo } from '@/hooks/test/editing/useUpdateTestInfo';
 import { useEffect, useState } from 'react';
 
 const firmSchema = z.object({

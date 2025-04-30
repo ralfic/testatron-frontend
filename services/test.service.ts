@@ -21,10 +21,10 @@ export const TestService = {
       select: (data) => data.data,
     });
   },
-  getMyTestsQueryOptions: () => {
+  getMyTestsQueryOptions: (status: 'expired' | 'published' | 'all' = 'all') => {
     return queryOptions({
       queryKey: [TestService.baseKey, 'list', 'my'],
-      queryFn: () => axiosWithAuth.get<ITest[]>('/tests/my'),
+      queryFn: () => axiosWithAuth.get<ITest[]>(`/tests/my?status=${status}`),
       select: (data) => data.data,
     });
   },
@@ -54,6 +54,8 @@ export const TestService = {
       select: (data) => data.data,
     });
   },
+  getTestSessionByUuid: (uuid: string) =>
+    axiosClassic.get<ITestSession>(`/test/session/${uuid}`),
   sendResponseTest: (uuid: string) =>
     axiosClassic.put<ITestSession>(`/test/response/send/${uuid}`),
   getTestResultQueryOptions: (uuid: string) => {

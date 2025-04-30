@@ -10,14 +10,14 @@ import {
 } from '@/components/ui/dialog';
 import parser from 'html-react-parser';
 import { useState } from 'react';
-import { usePublishTest } from '@/hooks/usePublishTest';
+import { usePublishTest } from '@/hooks/test/editing/usePublishTest';
 import { TestPublishExpireAt } from './TestPublishExpireAt';
 import { ITest, TestStatus } from '@/types';
 import { useForm } from 'react-hook-form';
 import { FormControl, FormField, Form } from '@/components/ui/form';
 import { Switch } from '@/components/ui/switch';
-import { useExpiresAt } from '@/hooks/useExpiresAt';
-import { useUpdateTestInfo } from '@/hooks/useUpdateTestInfo';
+import { useExpiresAt } from '@/hooks/test/editing/useExpiresAt';
+import { useUpdateTestInfo } from '@/hooks/test/editing/useUpdateTestInfo';
 
 export function TestPublishModal({ test }: { test: ITest }) {
   const { expiryOptionsDays, expiryOptionsHours } = useExpiresAt();

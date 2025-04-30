@@ -1,6 +1,6 @@
 'use client';
 import { Button } from '@/components/ui/button';
-import { useSendResponseTest } from '@/hooks/useSendResponseTest';
+import { useSendResponseTest } from '@/hooks/test/passing/useSendResponseTest';
 import { ITestSession, TestSessionStatus } from '@/types';
 
 export function TestingHeader({ data }: { data: ITestSession }) {
