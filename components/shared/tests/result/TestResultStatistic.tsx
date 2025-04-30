@@ -1,6 +1,8 @@
 'use client';
 import parser from 'html-react-parser';
-import { useGetTestResult } from '@/hooks/useGetTestResult';
+import { useGetTestResult } from '@/hooks/test/result/useGetTestResult';
+import { QuestionResult } from './question/QuestionResult';
+import { format } from 'date-fns';
 
 export function TestResultStatistic({ uuid }: { uuid: string }) {
   const { data } = useGetTestResult(uuid);
@@ -21,74 +23,92 @@ export function TestResultStatistic({ uuid }: { uuid: string }) {
     maxScore > 0 ? Math.round((data.score / maxScore) * 100) : 0;
 
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md mt-8">
-      <div className="text-center mb-8">
-        <h2 className="text-2xl font-bold text-gray-800 mb-2">Test Results</h2>
-        <div className="text-4xl font-bold text-blue-600">
-          {data.score} / {maxScore}
+    <div className="flex gap-4 mx-auto  justify-center mt-8">
+      <div className="max-w-2xl h-fit  p-6 bg-white rounded-lg w-full shadow-md ">
+        <div className="text-center mb-8">
+          <h2 className="text-2xl font-bold text-gray-800 mb-2">
+            Test Results
+          </h2>
+          <div className="text-4xl font-bold text-blue-600">
+            {data.score} / {maxScore}
+          </div>
+          <div className="w-full bg-gray-200 rounded-full h-4 mt-3">
+            <div
+              className="bg-blue-600 h-4 rounded-full"
+              style={{ width: `${scorePercentage}%` }}
+            ></div>
+          </div>
+          <div className="text-sm text-gray-500 mt-1">
+            {scorePercentage}% correct
+          </div>
         </div>
-        <div className="w-full bg-gray-200 rounded-full h-4 mt-3">
-          <div
-            className="bg-blue-600 h-4 rounded-full"
-            style={{ width: `${scorePercentage}%` }}
-          ></div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <StatisticCard
+            title="Correct Answers"
+            value={data.countCorrect}
+            total={totalQuestions}
+            color="bg-green-500"
+            icon="✓"
+          />
+
+          <StatisticCard
+            title="Incorrect Answers"
+            value={data.countWrong}
+            total={totalQuestions}
+            color="bg-red-500"
+            icon="✗"
+          />
+
+          <StatisticCard
+            title="Almost Correct"
+            value={data.countAlmostCorrect}
+            total={totalQuestions}
+            color="bg-yellow-500"
+            icon="~"
+          />
+
+          <StatisticCard
+            title="Skipped Questions"
+            value={data.countSkipped}
+            total={totalQuestions}
+            color="bg-gray-400"
+            icon="—"
+          />
         </div>
-        <div className="text-sm text-gray-500 mt-1">
-          {scorePercentage}% correct
+
+        <div className="mt-6 pt-4 border-t border-gray-200 ">
+          <h3 className="font-medium text-gray-700 mb-2">Details:</h3>
+          <ul className="text-sm text-gray-600 space-y-1">
+            <li className="flex gap-1">
+              Test: {parser(data.testSession.test.title)}
+            </li>
+            <li>
+              Completed at:{' '}
+              {data.testSession.createdAt &&
+                format(
+                  new Date(data.testSession.createdAt),
+                  'dd/MM/yyyy HH:mm'
+                )}
+            </li>
+          </ul>
         </div>
       </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <StatisticCard
-          title="Correct Answers"
-          value={data.countCorrect}
-          total={totalQuestions}
-          color="bg-green-500"
-          icon="✓"
-        />
-
-        <StatisticCard
-          title="Incorrect Answers"
-          value={data.countWrong}
-          total={totalQuestions}
-          color="bg-red-500"
-          icon="✗"
-        />
-
-        <StatisticCard
-          title="Almost Correct"
-          value={data.countAlmostCorrect}
-          total={totalQuestions}
-          color="bg-yellow-500"
-          icon="~"
-        />
-
-        <StatisticCard
-          title="Skipped Questions"
-          value={data.countSkipped}
-          total={totalQuestions}
-          color="bg-gray-400"
-          icon="—"
-        />
-      </div>
-
-      <div className="mt-6 pt-4 border-t border-gray-200">
-        <h3 className="font-medium text-gray-700 mb-2">Details:</h3>
-        <ul className="text-sm text-gray-600 space-y-1">
-          <li className="flex gap-1">
-            Test: {parser(data.testSession.test.title)}
-          </li>
-          <li>
-            Completed at:{' '}
-            {new Date(data.testSession.completedAt).toLocaleDateString()}
-          </li>
-        </ul>
+      <div className="flex flex-col gap-4 max-w-[600px] w-full ">
+        {data.testSession.test.questions?.map((question) => (
+          <QuestionResult
+            key={question.id}
+            question={question}
+            answer={data.testSession.answers?.find(
+              (answer) => answer.questionId === question.id
+            )}
+          />
+        ))}
       </div>
     </div>
   );
 }
 
-// Reusable Statistic Card Component
 function StatisticCard({
   title,
   value,

@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils';
 import parser from 'html-react-parser';
 import { Trash } from 'lucide-react';
 import { QuestionEditModal } from './modal/QuestionEditModal';
-import { useDeleteQuestion } from '@/hooks/useDeleteQuestion';
+import { useDeleteQuestion } from '@/hooks/test/editing/useDeleteQuestion';
 
 interface Props {
   question: IQuestion;

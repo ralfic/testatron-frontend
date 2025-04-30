@@ -12,10 +12,11 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { dashboardMenuPaths } from '@/constants';
+import { dashboardNav } from '@/constants';
 import Link from 'next/link';
 import UserInfo from './user/UserInfo';
 import { usePathname } from 'next/navigation';
+import { UserRole } from '@/types';
 
 export function DashboardSidebar() {
   const pathName = usePathname();
@@ -31,7 +32,11 @@ export function DashboardSidebar() {
         </SidebarHeader>
         <SidebarContent>
           <SidebarGroup>
-            {dashboardMenuPaths.map((item) => (
+            {dashboardNav(
+              pathName.startsWith('/teacher')
+                ? UserRole.TEACHER
+                : UserRole.STUDENT
+            ).map((item) => (
               <div key={item.title}>
                 <SidebarGroupLabel className="font-roboto font-medium text-lg ">
                   {item.title}
@@ -45,7 +50,7 @@ export function DashboardSidebar() {
                           asChild
                           isActive={pathName === path}
                         >
-                          <a className='text' href={path}>
+                          <a className="text" href={path}>
                             <Icon className="w-5 h-5" />
                             {name}
                           </a>

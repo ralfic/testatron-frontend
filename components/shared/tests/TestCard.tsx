@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { format } from 'date-fns';
 import { RiDraftLine } from 'react-icons/ri';
 import { FcExpired } from 'react-icons/fc';
-import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { RiShareForwardFill } from 'react-icons/ri';
 import { AiFillEdit } from 'react-icons/ai';
@@ -21,7 +20,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
-import { useDeleteTest } from '@/hooks/useDeleteTest';
+import { useDeleteTest } from '@/hooks/test/useDeleteTest';
 import toast from 'react-hot-toast';
 
 interface Props {
@@ -58,21 +57,15 @@ export function TestCard({ test }: Props) {
               Ends in: {format(new Date(test.expiresAt), 'dd/MM/yyyy HH:mm')}
             </p>
           )}
-          <div
-            className={cn('flex gap-2 relative', {
-              'before:h-full before:absolute before:top-0 before:left-[50%] before:translate-x-[50%] before:w-px  before:bg-primary':
-                !!test.expiresAt,
-            })}
-          >
+          <div className="flex gap-2 relative">
             <div className="text-gray-600 dark:text-gray-300 font-normal text-sm">
-              Created at:{' '}
-              {test.createdAt && format(new Date(test.createdAt), 'dd/MM/yyyy')}
+              Created at: {format(new Date(test.createdAt), 'dd/MM/yyyy')}
             </div>
+            <div className="w-px h-full rounded-full bg-primary dark:bg-gray-300"></div>
+
             {test.expiresAt && (
               <div className="text-gray-600 dark:text-gray-300 font-normal text-sm">
-                Expires at:{' '}
-                {test.expiresAt &&
-                  format(new Date(test.expiresAt), 'dd/MM/yyyy')}
+                Expires at: {format(new Date(test.expiresAt), 'dd/MM/yyyy')}
               </div>
             )}
           </div>

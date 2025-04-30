@@ -1,8 +1,8 @@
 'use client';
 
-import { useAuth } from '@/hooks/useAuth';
-import { ChangeFormAccount } from '../change-forms/ChangeFormAccount';
-import { ChangeFormPassword } from '../change-forms/ChangeFormPassword';
+import { useAuth } from '@/hooks/user/useAuth';
+import { ChangeFormAccount } from '../../change-forms/ChangeFormAccount';
+import { ChangeFormPassword } from '../../change-forms/ChangeFormPassword';
 import { Button } from '@/components/ui/button';
 import { LogOut } from 'lucide-react';
 
