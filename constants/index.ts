@@ -1,10 +1,5 @@
 import { UserRole } from '@/types';
-import {
-  AlarmClock,
-  AlarmClockOff,
-  LayoutDashboard,
-  Settings,
-} from 'lucide-react';
+import { AlarmClock, LayoutDashboard, Settings } from 'lucide-react';
 
 export function dashboardNav(role: UserRole) {
   return role === UserRole.TEACHER
@@ -13,19 +8,14 @@ export function dashboardNav(role: UserRole) {
           title: 'Menu',
           paths: [
             {
-              name: 'Dashboard',
-              path: `/teacher/dashboard`,
+              name: 'My tests',
+              path: `/teacher/test/my`,
               icon: LayoutDashboard,
             },
             {
-              name: 'Ongoing tests',
-              path: `/teacher/ongoing-tests`,
+              name: 'Test statistic',
+              path: `/teacher/test/statistic`,
               icon: AlarmClock,
-            },
-            {
-              name: 'Ended tests',
-              path: `/teacher/ended-tests`,
-              icon: AlarmClockOff,
             },
           ],
         },

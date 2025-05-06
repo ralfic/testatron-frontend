@@ -6,7 +6,8 @@ import { useMutation } from '@tanstack/react-query';
 export function useAnswerQuestion(uuid: string) {
   const answerQuestionMutation = useMutation({
     mutationKey: ['answerQuestion'],
-    mutationFn: (data: IAnswer) => TestService.answerQuestion(data),
+    mutationFn: (data: Omit<IAnswer, 'score' | 'status'>) =>
+      TestService.answerQuestion(data),
     onSettled: () => {
       queryClient.invalidateQueries({
         queryKey: [TestService.baseKey, 'session', uuid],

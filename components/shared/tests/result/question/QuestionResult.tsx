@@ -26,7 +26,7 @@ export function QuestionResult({ question, answer }: Props) {
       )}
     >
       <div className="w-full">
-        <div className="flex justify-between">
+        <div className="flex justify-between gap-4">
           <div>
             <div className="text-xl font-semibold">{parser(question.text)}</div>
             {question.description && (
@@ -76,7 +76,7 @@ export function QuestionResult({ question, answer }: Props) {
                   })}
                 >
                   {answer?.selectedOptions?.find((o) => o.id === option.id)
-                    ? "- You've selected"
+                    ? '<-- selected option'
                     : ''}
                 </p>
               </div>

@@ -24,7 +24,9 @@ export default function UserInfo({ size = 'md' }: Props) {
       {isLoading && <UserInfoSkeleton size={size} />}
       {!isLoading && profile && (
         <>
-          <Link href="/i/dashboard">
+          <Link
+            href={`${profile.role === 'STUDENT' ? '/student' : '/teacher'}`}
+          >
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger>

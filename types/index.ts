@@ -103,16 +103,19 @@ export interface ITestSession {
   answers: IAnswer[];
 }
 
-interface ITestSessionWithResult
+export interface ITestSessionResult
   extends Omit<ITestSession, 'answers' | 'test'> {
   completedAt: string | number | Date;
   answers: IAnswerResult[];
   test: ITest;
 }
 
+export interface ITestSessionStatistic extends Omit<ITestSession, 'test'> {
+  testResult: ITestResult;
+}
 export interface ITestResult {
   id: number;
-  testSession: ITestSessionWithResult;
+  testSession: ITestSessionResult;
   score: number;
   countCorrect: number;
   countWrong: number;
@@ -120,11 +123,16 @@ export interface ITestResult {
   countSkipped: number;
 }
 
+export interface ITestStatistic extends ITest {
+  testSessions?: ITestSessionStatistic[];
+}
+
 export type IOptionCreate = Omit<IOption, 'id' | 'questionId'>;
 
 export enum QuestionType {
   MULTIPLE = 'MULTIPLE',
   SINGLE = 'SINGLE',
+  TEXT = 'TEXT',
 }
 
 export enum TestStatus {
