@@ -2,11 +2,9 @@ import { TestService } from '@/services/test.service';
 import { ITest } from '@/types';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError, AxiosResponse } from 'axios';
-import { useRouter } from 'next/navigation';
 
 export function useDeleteTest() {
   const queryClient = useQueryClient();
-  const { replace } = useRouter();
 
   const deleteTestMutation = useMutation<
     AxiosResponse<void>,
@@ -42,9 +40,7 @@ export function useDeleteTest() {
         );
       }
     },
-    onSuccess: () => {
-      replace('/i/dashboard');
-    },
+    onSuccess: () => {},
   });
 
   return {

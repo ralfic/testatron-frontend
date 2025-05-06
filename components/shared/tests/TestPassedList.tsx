@@ -6,30 +6,35 @@ import { Button } from '@/components/ui/button';
 import { IoMdArrowRoundForward as ArrowRight } from 'react-icons/io';
 import { useGetPassedTests } from '@/hooks/student/test/useGetPassedTests';
 import { IPassedTest } from '@/services/student.service';
+import { Skeleton } from '@/components/ui/skeleton';
 
-export function PassedTestsList() {
+export function TestPassedList() {
   const { data, isLoading } = useGetPassedTests();
 
   return (
     <div>
       <h1 className="text-4xl font-semibold">Passed tests</h1>
-      {isLoading && <p>Loading...</p>}
-      {!data && !isLoading && <p>No tests</p>}
-      {data && (
-        <div className="flex flex-col gap-4 mt-4">
-          {!data.length && <p>No tests</p>}
-          {data.map((session) => (
-            <PassedTestCard key={session.id} session={session} />
+      <div className="flex flex-col gap-4 mt-4 max-w-[700px]">
+        {isLoading &&
+          [...Array(3)].map((_, i) => (
+            <Skeleton key={i} className="h-20 w-full " />
           ))}
-        </div>
-      )}
+        {data && (
+          <>
+            {!data.length && <p>No tests</p>}
+            {data.map((session) => (
+              <PassedTestCard key={session.id} session={session} />
+            ))}
+          </>
+        )}
+      </div>
     </div>
   );
 }
 
 export function PassedTestCard({ session }: { session: IPassedTest }) {
   return (
-    <div className="bg-card p-4 rounded-[20px] font-bold flex justify-between gap-4 max-w-[600px]">
+    <div className="bg-card p-4 rounded-[20px] font-bold flex justify-between gap-4">
       <div className="flex flex-col ">
         <div className=" text-lg">{parser(session.test.title)}</div>
 

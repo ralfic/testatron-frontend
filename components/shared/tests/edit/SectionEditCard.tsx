@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils';
 import parser from 'html-react-parser';
-import { TestEditModal } from '../TestEditModal';
 import { ITest } from '@/types';
+import { TestEditModal } from './TestEditModal';
 
 export function SectionEditCard({ test }: { test: ITest }) {
   return (

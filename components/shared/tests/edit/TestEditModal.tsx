@@ -7,7 +7,6 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
-import { TextEditor } from '../editor/TextEditor';
 import { Button } from '@/components/ui/button';
 import { Edit } from 'lucide-react';
 import { useForm } from 'react-hook-form';
@@ -18,6 +17,7 @@ import { ITest } from '@/types';
 import { useCreateTest } from '@/hooks/test/useCreateTest';
 import { useUpdateTestInfo } from '@/hooks/test/editing/useUpdateTestInfo';
 import { useEffect, useState } from 'react';
+import { TextEditor } from '../../editor/TextEditor';
 
 const firmSchema = z.object({
   title: z

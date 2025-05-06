@@ -21,8 +21,10 @@ export function useAuth() {
       toast.success(`Welcome ${data.data.fullName}`);
       push(
         `/${
-          data.data.role === UserRole.STUDENT ? 'student' : 'teacher'
-        }/dashboard`
+          data.data.role === UserRole.STUDENT
+            ? 'student/dashboard'
+            : 'teacher/test/my'
+        }`
       );
     },
 
@@ -38,8 +40,10 @@ export function useAuth() {
       toast.success(`Welcome ${data.data.fullName}`);
       push(
         `/${
-          data.data.role === UserRole.STUDENT ? 'student' : 'teacher'
-        }/dashboard`
+          data.data.role === UserRole.STUDENT
+            ? 'student/dashboard'
+            : 'teacher/test/my'
+        }`
       );
     },
     onError: () => {

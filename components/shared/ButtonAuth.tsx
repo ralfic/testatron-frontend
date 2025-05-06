@@ -20,8 +20,10 @@ export function ButtonAuth({ onClose }: Props) {
         if (profile) {
           router.push(
             `/${
-              profile.role === UserRole.STUDENT ? 'student' : 'teacher'
-            }/dashboard`
+              profile.role === UserRole.STUDENT
+                ? 'student/dashboard'
+                : 'teacher/test/my'
+            }`
           );
         } else {
           onClose();

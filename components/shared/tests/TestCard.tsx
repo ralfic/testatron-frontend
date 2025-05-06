@@ -45,27 +45,23 @@ export function TestCard({ test }: Props) {
       )}
       {test.status === TestStatus.DRAFT && (
         <span className="absolute bg-secondary  top-0  left-0 rounded-ss-[20px] rounded-ee-[20px] py-1.5 px-4 flex gap-2">
-          <RiDraftLine className="w-6 h-6" />
+          <RiDraftLine className="w-6 h-6 " />
           Draft
         </span>
       )}
       <div className="flex justify-between pt-4">
         <div className="flex flex-col ">
           <div className="mt-1 text-lg">{parser(test.title)}</div>
-          {test.status === TestStatus.EXPIRED && test.expiresAt && (
-            <p className="text-gray-600 font-normal text-sm">
-              Ends in: {format(new Date(test.expiresAt), 'dd/MM/yyyy HH:mm')}
-            </p>
-          )}
           <div className="flex gap-2 relative">
             <div className="text-gray-600 dark:text-gray-300 font-normal text-sm">
-              Created at: {format(new Date(test.createdAt), 'dd/MM/yyyy')}
+              Created at: {format(new Date(test.createdAt), 'dd/MM/yyyy HH:mm')}
             </div>
             <div className="w-px h-full rounded-full bg-primary dark:bg-gray-300"></div>
 
             {test.expiresAt && (
               <div className="text-gray-600 dark:text-gray-300 font-normal text-sm">
-                Expires at: {format(new Date(test.expiresAt), 'dd/MM/yyyy')}
+                Expires at:{' '}
+                {format(new Date(test.expiresAt), 'dd/MM/yyyy HH:mm')}
               </div>
             )}
           </div>
