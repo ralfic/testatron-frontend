@@ -52,7 +52,7 @@ export function TestingQuestion({
 
   return (
     <div>
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-2">
         <div>
           <div className="text-2xl font-semibold">{parser(question.text)}</div>
           <div className="text-sm editor">
@@ -91,6 +91,7 @@ export function TestingQuestion({
                 checked={!!selectedOptions?.find((o) => o.id === option.id)}
               />
             )}
+
             <Label className="edit text-lg">{option.text}</Label>
           </div>
         ))}

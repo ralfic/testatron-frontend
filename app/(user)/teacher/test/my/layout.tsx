@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Ended test',
+  title: 'My tests',
 };
 
-export default function EndedTestLayout({
+export default function MyTestsLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

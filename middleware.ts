@@ -24,7 +24,6 @@ export async function middleware(req: NextRequest) {
 
     try {
       const testSession = await TestService.getTestSessionByUuid(uuid);
-      console.log(testSession.data.status);
 
       if (
         testSession.data.status === TestSessionStatus.FINISHED &&
@@ -38,6 +37,12 @@ export async function middleware(req: NextRequest) {
         !currentPath.startsWith('/test/testing/')
       ) {
         return NextResponse.redirect(new URL(`/test/testing/${uuid}`, req.url));
+      }
+      if (currentPath.startsWith('/test/edit')) {
+        const user = await UserService.getProfile(session);
+        if (user.data.role !== UserRole.TEACHER) {
+          return NextResponse.redirect(new URL('/', req.url));
+        }
       }
     } catch (error) {
       console.error('Error fetching test session:', error);
@@ -55,12 +60,23 @@ export async function middleware(req: NextRequest) {
       const role = data.data.role;
 
       if (role === UserRole.TEACHER && currentPath.startsWith('/student')) {
-        return NextResponse.redirect(new URL('/teacher/dashboard', req.url));
+        return NextResponse.redirect(new URL('/teacher/test/my', req.url));
       } else if (
         role === UserRole.STUDENT &&
         currentPath.startsWith('/teacher')
       ) {
         return NextResponse.redirect(new URL('/student/dashboard', req.url));
+      } else if (currentPath === '/teacher' || currentPath === '/student') {
+        return NextResponse.redirect(
+          new URL(
+            `/${
+              role === UserRole.TEACHER
+                ? 'teacher/test/my'
+                : 'student/dashboard'
+            }`,
+            req.url
+          )
+        );
       }
     } catch (error) {
       console.error('Error fetching user profile:', error);

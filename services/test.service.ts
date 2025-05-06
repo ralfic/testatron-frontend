@@ -45,7 +45,7 @@ export const TestService = {
     axiosClassic.post(`/test/join/${data.code}`, {
       guestName: data.guestName,
     }),
-  answerQuestion: (data: IAnswer) =>
+  answerQuestion: (data: Omit<IAnswer, 'score' | 'status'>) =>
     axiosClassic.put<ITestSession>(`/test/response/answer`, data),
   getTestSessionByUuidQueryOptions: (uuid: string) => {
     return queryOptions({
